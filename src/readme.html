@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Инструкция к Smart_Calc_v2.0</title>
+  <style>
+    html {
+      box-sizing: border-box;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: inherit;
+    }
+
+    body {
+      min-width: 320px;
+
+      font-family: "Roboto", sans-serif;
+      font-weight: 400;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1800px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <section>
+    <div class="container">
+      <h1 style="text-align:center">Инструкция по использованию Smart_Calc_v2.0</h1>
+
+      <h2>Установка:</h2>
+      <ol>
+        <li>Вызвать цель
+          <i>make install</i> из папки src.
+        </li>
+        <li>Дождаться установки *.app.</li>
+      </ol>
+
+      <h2>Сборка в архив:</h2>
+      <ol>
+        <li>Вызвать цель <i>make dist</i> из папки src.</li>
+        <li>Архив собирается в папку <i>src</i>.</li>
+      </ol>
+
+      <h2>Удаление:</h2>
+      <ol>
+        <li>Вызвать цель <i>make uninstall</i> из папки src.</li>
+        <li>Дождаться удаления&nbsp; *.app.</li>
+      </ol>
+
+      <h2>Запуск и использование:</h2>
+      <ol>
+        <li>Для запуска приложения открыть исполняемый файл open ./build/Calc.app/Contents/MacOS/SmartCalc, либо через
+          терминал командой &quot;open build/SmartCalc.app&quot;</li>
+        <li>Для вычисления: ввести выражение в поле с клавиатуры, либо кнопками и нажать на кнопку &quot;=&quot;.</li>
+        <li>Для вычисления выражения с использованием переменной <i>x</i> необходимо ввести в выходную строку <i>x</i>
+          при
+          помощи соответствующей кнопки, а также ввести в поле числовое значение <i>x</i></li>
+        <li>Для построения графика: перевести калькулятор в режим построения графика&nbsp; при помощи
+          кнопки &quot;∟&quot;, ввести выражение и нажать&nbsp;&nbsp;на кнопку &quot;Graph&quot;. Для очистки поля
+          графика
+          использовать кнопку &quot;Clear&quot;</li>
+      </ol>
+      <h2>Smart_Calc_v2.0 поддерживает следующие действия:</h2>
+
+      <ul>
+        <li>Арифметические операторы: </li>
+        <ol>
+          <li>Скобки: <i>(a + b)</i></li>
+          <li>Сложение: <i>a + b</i></li>
+          <li>Вычитание: <i>a - b</i></li>
+          <li>Умножение: <i>a * b</i></li>
+          <li>Деление: <i>a / b</i></li>
+          <li>Возведение в степень: <i>a ^ b</i></li>
+          <li>Остаток от деления: <i>a mod b</i></li>
+          <li>Унарный плюс: <i>+a</i></li>
+          <li>Унарный минус: <i>-a</i></li>
+        </ol>
+        <li>Функции:</li>
+        <ol>
+          <li>Косинус: <i>cos(x)</i></li>
+          <li>Синус: <i>sin(x)</i></li>
+          <li>Тангенс: <i>tan(x)</i></li>
+          <li>Арк косинус: <i>acos(x)</i></li>
+          <li>Арк синус: <i>asin(x)</i></li>
+          <li>Арк тангенс: <i>atan(x)</i></li>
+          <li>Квадратный корень: <i>sqrt(x)</i></li>
+          <li>Натуральный логарифм: <i>ln(x)</i></li>
+          <li>Десятичный логарифм: <i>log(x)</i></li>
+        </ol>
+        <li>Вычисление произвольных скобочных арифметических выражений в инфиксной нотации с подстановкой значения
+          переменной <i>x</i> в виде числа.</li>
+      </ul>
+    </div>
+  </section>
+</body>
+
+</html>
