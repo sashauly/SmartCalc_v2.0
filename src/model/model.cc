@@ -2,8 +2,7 @@
 
 namespace s21 {
 
-bool Model::is_number(char ch) { return ((ch) >= '0' && (ch) <= '9'); }
-bool Model::is_letter(char ch) {
+bool Model::is_letter(const char ch) {
   return ((ch) >= 'a' && (ch) <= 'z') || ((ch) >= 'A' && (ch) <= 'Z');
 }
 bool Model::is_operation(char ch) {
@@ -13,64 +12,57 @@ bool Model::is_operation(char ch) {
 
 //  Проверка ошибок во входной строке
 int Model::validator(std::string& str) {
-  int error = 0;
+  int error = 1;
   int i = 0;
   int open_sk = 0;
   int close_sk = 0;
-  for (; str[i] != '\0' && str[i] != '\n' && error == 0; i++) {
+  for (; str[i] != '\0' && str[i] != '\n' && error == 1; i++) {
     if (str[i] == '(') open_sk++;
     if (str[i] == ')') close_sk++;
     if ((str[i] == '(' && str[i + 1] == ')') ||
         (str[i] == ')' && str[i + 1] == '(') || (str[0] == ')') ||
         (is_operation(str[i]) && is_operation(str[i + 1]))) {
-      error = 1;
+      error = 0;
       break;
     }
   }
-  if (is_operation(str[i - 1])) error = 1;
-  if ((open_sk != close_sk) || (str[i - 1]) == '(') error = 1;
+  if (is_operation(str[i - 1])) error = 0;
+  if ((open_sk != close_sk) || (str[i - 1]) == '(') error = 0;
   return error;
 }
 //  Возвращает тип функции, полученный путем парсинга строки
-int Model::func_parser(std::string& dst, std::string& src, int* i,
-                       lexeme_enum* type) {
+int Model::func_parser(std::string& func, int* i, lexeme_enum* type) {
+  char dst[256] = {0};
   *type = NONE;
   int error = 0;
   int j = 0;
 
-  while (is_letter(src[*i])) {
-    dst[j] = src[*i];
-    *i = *i + 1;
+  while (is_letter(func[*i])) {
+    dst[j] = func[*i];
+    *i += 1;
     j++;
   }
   *i = *i - 1;
 
-  char dst_arr[dst.length() + 1];
-
-  strcpy(dst_arr, dst.c_str());
-
-  // std::string func_array[10] = {"cos",  "sin",  "tan", "acos", "asin",
-  //                               "atan", "sqrt", "ln",  "log",  "mod"};
-
-  if (!strcmp(dst_arr, "cos")) {
+  if (!strcmp(dst, "cos")) {
     *type = COS;
-  } else if (!strcmp(dst_arr, "sin")) {
+  } else if (!strcmp(dst, "sin")) {
     *type = SIN;
-  } else if (!strcmp(dst_arr, "tan")) {
+  } else if (!strcmp(dst, "tan")) {
     *type = TAN;
-  } else if (!strcmp(dst_arr, "acos")) {
+  } else if (!strcmp(dst, "acos")) {
     *type = ACOS;
-  } else if (!strcmp(dst_arr, "asin")) {
+  } else if (!strcmp(dst, "asin")) {
     *type = ASIN;
-  } else if (!strcmp(dst_arr, "atan")) {
+  } else if (!strcmp(dst, "atan")) {
     *type = ATAN;
-  } else if (!strcmp(dst_arr, "sqrt")) {
+  } else if (!strcmp(dst, "sqrt")) {
     *type = SQRT;
-  } else if (!strcmp(dst_arr, "ln")) {
+  } else if (!strcmp(dst, "ln")) {
     *type = LN;
-  } else if (!strcmp(dst_arr, "log")) {
+  } else if (!strcmp(dst, "log")) {
     *type = LOG;
-  } else if (!strcmp(dst_arr, "mod")) {
+  } else if (!strcmp(dst, "mod")) {
     *type = MOD;
   } else {
     error = 1;
@@ -91,7 +83,7 @@ int Model::get_priority(int type) {
   return priority;
 }
 //  Возвращает тип операции
-lexeme_enum Model::type_operation(char ch) {
+Model::lexeme_enum Model::type_operation(char ch) {
   lexeme_enum type = NONE;
   if ((ch) == '+') {
     type = SUM;
@@ -112,9 +104,9 @@ int Model::binary_operations(int oper, double* c) {
   double a = 0, b = 0;
   *c = 0;
   int error = 0;
-  a = numbers_.top().value;
+  a = numbers_.top().value_;
   numbers_.pop();
-  b = numbers_.top().value;
+  b = numbers_.top().value_;
   numbers_.pop();
   switch (oper) {
     case SUM:
@@ -144,10 +136,10 @@ int Model::func_operations(int oper, double* c) {
   double a = 0, b = 0;
   *c = 0;
   int error = 0;
-  a = numbers_.top().value;
+  a = numbers_.top().value_;
   numbers_.pop();
   if (oper == COS) {
-    *c = cos(a);
+    *c = std::cos(a);
   } else if (oper == SIN) {
     *c = sin(a);
   } else if (oper == TAN) {
@@ -165,7 +157,7 @@ int Model::func_operations(int oper, double* c) {
   } else if (oper == SQRT) {
     *c = sqrt(a);
   } else if (oper == POW) {
-    b = numbers_.top().value;
+    b = numbers_.top().value_;
     numbers_.pop();
     *c = pow(b, a);
   }
@@ -176,7 +168,7 @@ int Model::func_operations(int oper, double* c) {
 int Model::calculations() {
   double c = 0;
   int error = 0;
-  int oper = operations_.top().type;
+  int oper = operations_.top().type_;
   if (oper >= SUM && oper <= MOD) {
     error = binary_operations(oper, &c);
   } else if (oper >= COS && oper <= POW) {
@@ -190,11 +182,11 @@ int Model::calculations() {
 }
 
 //  Основной парсер строки
-int Model::parser(std::string& str, double x) {
-  int error = 0;
-  int i = 0;
-  while (i < (int)str.length()) {
-    std::string tmp = {0};
+void Model::parser(std::string& str, double x) {
+  // Удаления пробелов из строки
+  str.erase(remove(str.begin(), str.end(), ' '), str.end());
+
+  for (int i = 0; i < (int)str.length(); i++) {
     // Унарный минус
     if ((str[i] == '-' && i == 0) ||
         (i > 0 && str[i] == '-' && str[i - 1] == '(')) {
@@ -208,19 +200,18 @@ int Model::parser(std::string& str, double x) {
       operations_.push({0, SUM});
       continue;
       // Число
-    } else if (is_number(str[i])) {
+    } else if (isdigit(str[i])) {
       double number = 0.0;
       number = atof(&str[i]);
       std::ostringstream stream;
       stream << number;
-      std::string value_str = stream.str();
+      std::string value__str = stream.str();
       numbers_.push({number, NUM});
-      i += value_str.length();
+      i += value__str.length();
       continue;
       // Число PI
     } else if (str[i] == 'p') {
       numbers_.push({PI, NUM});
-      i++;
       continue;
       // x
     } else if (str[i] == 'x') {
@@ -229,13 +220,9 @@ int Model::parser(std::string& str, double x) {
       // Функция
     } else if (is_letter(str[i])) {
       lexeme_enum func_type = NONE;
-      error = func_parser(tmp, str, &i, &func_type);
-      if (error == 0) {
-        operations_.push({0, func_type});
-        continue;
-      } else {
-        break;
-      }
+      func_parser(str, &i, &func_type);
+      operations_.push({0, func_type});
+      continue;
       // Операнд
     } else if (is_operation(str[i])) {
       lexeme_enum type = type_operation(str[i]);
@@ -243,17 +230,12 @@ int Model::parser(std::string& str, double x) {
         operations_.push({0, type});
         continue;
       } else {
-        if (get_priority(type) > get_priority(operations_.top().type)) {
+        if (get_priority(type) > get_priority(operations_.top().type_)) {
           operations_.push({0, type});
           continue;
         } else {
-          error = calculations();
-          if (error == 0) {
-            i--;
-            continue;
-          } else {
-            break;
-          }
+          calculations();
+          continue;
         }
       }
       // Открывающая скобка
@@ -262,66 +244,36 @@ int Model::parser(std::string& str, double x) {
       continue;
       // Закрывающая скобка
     } else if (str[i] == ')') {
-      while (operations_.top().type != OPEN) {
-        error = calculations();
-        if (error != 0) {
-          break;
-        }
+      while (operations_.top().type_ != OPEN) {
+        calculations();
       }
       operations_.pop();
       continue;
-    } else {
-      error = 1;
-      break;
     }
   }
-  return error;
 }
 
 //  Основная функция SMART_CALC
 double Model::s21_smart_calc(std::string& str, double x) {
   double result = 0;
-  int error = 0;
 
-  // Удаления пробелов из строки
-  // str.erase(remove(str.begin(), str.end(), ' '), str.end());
-
-  error = parser(str, x);
-  if (error == 0) {
-    while (!operations_.empty()) {
-      error = calculations();
-      if (error != 0) {
-        while (!operations_.empty()) {
-          operations_.pop();
-        }
-        break;
-      }
-    }
-    if (error == 0) {
-      result = numbers_.top().value;
-    }
-    while (!numbers_.empty()) {
-      numbers_.pop();
-    }
-  } else {
-    while (!operations_.empty()) {
-      operations_.pop();
-    }
-    while (!numbers_.empty()) {
-      numbers_.pop();
-    }
+  parser(str, x);
+  while (!operations_.empty()) {
+    calculations();
   }
-  return !(error) ? result : error;
+  result = numbers_.top().value_;
+  return result;
 }
 
 }  // namespace s21
 int main() {
   s21::Model a;
-  std::string str = "2+2";
+  std::string str = "-1-1";
   double res;
   if (a.validator(str)) {
     res = a.s21_smart_calc(str, 0.0);
   }
   std::cout << res;
+  // 305045.5
   return 0;
 }

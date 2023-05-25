@@ -1,6 +1,9 @@
 #ifndef SRC_MODEL_MODEL_H_
 #define SRC_MODEL_MODEL_H_
 
+using namespace std;
+
+#include <algorithm>
 #include <cmath>
 #include <cstring>
 #include <iostream>
@@ -11,27 +14,6 @@
 #define PI acos(-1)
 
 namespace s21 {
-typedef enum {
-  NONE = 0,
-  NUM,
-  SUM,
-  SUB,
-  MULT,
-  DIV,
-  MOD,
-  COS,
-  SIN,
-  TAN,
-  ACOS,
-  ASIN,
-  ATAN,
-  LN,
-  LOG,
-  SQRT,
-  POW,
-  OPEN,
-  CLOSED
-} lexeme_enum;
 
 class Model {
  public:
@@ -41,24 +23,42 @@ class Model {
   int validator(std::string& str);
 
  private:
-  typedef struct data_t {
-    double value;
-    lexeme_enum type;
-  } data_t;
-  std::stack<data_t> numbers_;
-  std::stack<data_t> operations_;
-
-  int func_parser(std::string& dst, std::string& src, int* i,
-                  lexeme_enum* type);
+  typedef enum {
+    NONE = 0,
+    NUM,
+    SUM,
+    SUB,
+    MULT,
+    DIV,
+    MOD,
+    COS,
+    SIN,
+    TAN,
+    ACOS,
+    ASIN,
+    ATAN,
+    LN,
+    LOG,
+    SQRT,
+    POW,
+    OPEN,
+    CLOSED
+  } lexeme_enum;
+  typedef struct Lexeme {
+    double value_;
+    lexeme_enum type_;
+  } Lexeme;
+  std::stack<Lexeme> numbers_;
+  std::stack<Lexeme> operations_;
+  int func_parser(std::string& func, int* i, lexeme_enum* type);
   int get_priority(int type);
   lexeme_enum type_operation(char ch);
   int binary_operations(int oper, double* c);
   int func_operations(int oper, double* c);
   int calculations();
-  int parser(std::string& str, double x);
+  void parser(std::string& str, double x);
   bool is_letter(char ch);
   bool is_operation(char ch);
-  bool is_number(char ch);
 };
 
 }  // namespace s21
