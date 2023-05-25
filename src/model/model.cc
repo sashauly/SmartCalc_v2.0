@@ -2,19 +2,17 @@
 
 namespace s21 {
 
-//  Удаляет пробелы из входной строки
-void remove_spaces(char* src, char* dst) {
-  int j = 0;
-  for (int i = 0; src[i] != '\0'; i++) {
-    if (src[i] != ' ') {
-      dst[j] = src[i];
-      j++;
-    }
-  }
-  dst[j] = '\0';
+bool Model::is_number(char ch) { return ((ch) >= '0' && (ch) <= '9'); }
+bool Model::is_letter(char ch) {
+  return ((ch) >= 'a' && (ch) <= 'z') || ((ch) >= 'A' && (ch) <= 'Z');
 }
+bool Model::is_operation(char ch) {
+  return ((ch) == '+' || (ch) == '-' || (ch) == '*' || (ch) == '/' ||
+          (ch) == '^');
+}
+
 //  Проверка ошибок во входной строке
-int validator(char* str) {
+int Model::validator(std::string& str) {
   int error = 0;
   int i = 0;
   int open_sk = 0;
@@ -33,31 +31,10 @@ int validator(char* str) {
   if ((open_sk != close_sk) || (str[i - 1]) == '(') error = 1;
   return error;
 }
-//  Перевод числовых значений из строки в число
-int number_parser(char* dst, char* src, int* i, double* number) {
-  *number = 0;
-  int count_dot = 0;
-  int error = 0;
-  int j = 0;
-
-  while (is_number(src[*i]) || src[*i] == '.') {
-    if (src[*i] == ',') src[*i] = '.';
-    if (src[*i] == '.') count_dot++;
-    dst[j] = src[*i];
-    *i = *i + 1;
-    j++;
-  }
-  *i = *i - 1;
-  if (count_dot > 1) {
-    error = 1;
-  } else {
-    *number = atof(dst);
-  }
-  return error;
-}
 //  Возвращает тип функции, полученный путем парсинга строки
-int func_parser(char* dst, char* src, int* i, int* type) {
-  *type = 0;
+int Model::func_parser(std::string& dst, std::string& src, int* i,
+                       lexeme_enum* type) {
+  *type = NONE;
   int error = 0;
   int j = 0;
 
@@ -68,25 +45,32 @@ int func_parser(char* dst, char* src, int* i, int* type) {
   }
   *i = *i - 1;
 
-  if (!strcmp(dst, "cos")) {
+  char dst_arr[dst.length() + 1];
+
+  strcpy(dst_arr, dst.c_str());
+
+  // std::string func_array[10] = {"cos",  "sin",  "tan", "acos", "asin",
+  //                               "atan", "sqrt", "ln",  "log",  "mod"};
+
+  if (!strcmp(dst_arr, "cos")) {
     *type = COS;
-  } else if (!strcmp(dst, "sin")) {
+  } else if (!strcmp(dst_arr, "sin")) {
     *type = SIN;
-  } else if (!strcmp(dst, "tan")) {
+  } else if (!strcmp(dst_arr, "tan")) {
     *type = TAN;
-  } else if (!strcmp(dst, "acos")) {
+  } else if (!strcmp(dst_arr, "acos")) {
     *type = ACOS;
-  } else if (!strcmp(dst, "asin")) {
+  } else if (!strcmp(dst_arr, "asin")) {
     *type = ASIN;
-  } else if (!strcmp(dst, "atan")) {
+  } else if (!strcmp(dst_arr, "atan")) {
     *type = ATAN;
-  } else if (!strcmp(dst, "sqrt")) {
+  } else if (!strcmp(dst_arr, "sqrt")) {
     *type = SQRT;
-  } else if (!strcmp(dst, "ln")) {
+  } else if (!strcmp(dst_arr, "ln")) {
     *type = LN;
-  } else if (!strcmp(dst, "log")) {
+  } else if (!strcmp(dst_arr, "log")) {
     *type = LOG;
-  } else if (!strcmp(dst, "mod")) {
+  } else if (!strcmp(dst_arr, "mod")) {
     *type = MOD;
   } else {
     error = 1;
@@ -94,7 +78,7 @@ int func_parser(char* dst, char* src, int* i, int* type) {
   return error;
 }
 //  Возвращает приоритет операции или функции
-int get_priority(int type) {
+int Model::get_priority(int type) {
   int priority = 0;
   if (type == SUM || type == SUB)
     priority = 1;
@@ -107,8 +91,8 @@ int get_priority(int type) {
   return priority;
 }
 //  Возвращает тип операции
-int type_operation(char ch) {
-  int type = 0;
+lexeme_enum Model::type_operation(char ch) {
+  lexeme_enum type = NONE;
   if ((ch) == '+') {
     type = SUM;
   } else if ((ch) == '-') {
@@ -124,14 +108,14 @@ int type_operation(char ch) {
 }
 
 //  Вычисление бинарных операций
-int binary_operations(struct stack** stack_n, int oper, double* c) {
+int Model::binary_operations(int oper, double* c) {
   double a = 0, b = 0;
   *c = 0;
   int error = 0;
-  a = (peek(*stack_n).value);
-  pop(stack_n);
-  b = (peek(*stack_n).value);
-  pop(stack_n);
+  a = numbers_.top().value;
+  numbers_.pop();
+  b = numbers_.top().value;
+  numbers_.pop();
   switch (oper) {
     case SUM:
       *c = a + b;
@@ -156,12 +140,12 @@ int binary_operations(struct stack** stack_n, int oper, double* c) {
   return error;
 }
 //  Вычисление функций
-int func_operations(struct stack** stack_n, int oper, double* c) {
+int Model::func_operations(int oper, double* c) {
   double a = 0, b = 0;
   *c = 0;
   int error = 0;
-  a = (peek(*stack_n).value);
-  pop(stack_n);
+  a = numbers_.top().value;
+  numbers_.pop();
   if (oper == COS) {
     *c = cos(a);
   } else if (oper == SIN) {
@@ -181,82 +165,89 @@ int func_operations(struct stack** stack_n, int oper, double* c) {
   } else if (oper == SQRT) {
     *c = sqrt(a);
   } else if (oper == POW) {
-    b = (peek(*stack_n).value);
-    pop(stack_n);
+    b = numbers_.top().value;
+    numbers_.pop();
     *c = pow(b, a);
   }
   return error;
 }
 
 //  Вычисление в зависимости от оператора в стеке
-int calculations(struct stack** stack_n, struct stack** stack_o, data_t* data) {
+int Model::calculations() {
   double c = 0;
   int error = 0;
-  int oper = peek(*stack_o).type;
+  int oper = operations_.top().type;
   if (oper >= SUM && oper <= MOD) {
-    error = binary_operations(stack_n, oper, &c);
+    error = binary_operations(oper, &c);
   } else if (oper >= COS && oper <= POW) {
-    error = func_operations(stack_n, oper, &c);
+    error = func_operations(oper, &c);
   }
-  pop(stack_o);
+  operations_.pop();
   if (error == 0) {
-    push(stack_n, data, c, NUM);
+    numbers_.push({c, NUM});
   }
   return error;
 }
 
 //  Основной парсер строки
-int parser(char* str, struct stack** stack_n, struct stack** stack_o,
-           data_t* data, double x) {
+int Model::parser(std::string& str, double x) {
   int error = 0;
-  for (int i = 0; i < (int)strlen(str); i++) {
-    char tmp[256] = {0};
+  int i = 0;
+  while (i < (int)str.length()) {
+    std::string tmp = {0};
+    // Унарный минус
     if ((str[i] == '-' && i == 0) ||
         (i > 0 && str[i] == '-' && str[i - 1] == '(')) {
-      push(stack_n, data, 0, NUM);
-      push(stack_o, data, 0, SUB);
+      numbers_.push({0, NUM});
+      operations_.push({0, SUB});
       continue;
+      // Унарный плюс
     } else if ((str[i] == '+' && i == 0) ||
                (i > 0 && str[i] == '+' && str[i - 1] == '(')) {
-      push(stack_n, data, 0, NUM);
-      push(stack_o, data, 0, SUM);
+      numbers_.push({0, NUM});
+      operations_.push({0, SUM});
       continue;
+      // Число
     } else if (is_number(str[i])) {
-      double number = 0;
-      error = number_parser(tmp, str, &i, &number);
-      if (error == 0) {
-        push(stack_n, data, number, NUM);
-        continue;
-      } else {
-        break;
-      }
+      double number = 0.0;
+      number = atof(&str[i]);
+      std::ostringstream stream;
+      stream << number;
+      std::string value_str = stream.str();
+      numbers_.push({number, NUM});
+      i += value_str.length();
+      continue;
+      // Число PI
     } else if (str[i] == 'p') {
-      push(stack_n, data, PI, NUM);
+      numbers_.push({PI, NUM});
       i++;
       continue;
+      // x
     } else if (str[i] == 'x') {
-      push(stack_n, data, x, NUM);
+      numbers_.push({x, NUM});
       continue;
+      // Функция
     } else if (is_letter(str[i])) {
-      int func_type = 0;
+      lexeme_enum func_type = NONE;
       error = func_parser(tmp, str, &i, &func_type);
       if (error == 0) {
-        push(stack_o, data, 0, func_type);
+        operations_.push({0, func_type});
         continue;
       } else {
         break;
       }
+      // Операнд
     } else if (is_operation(str[i])) {
-      int type = type_operation(str[i]);
-      if (is_empty(*stack_o)) {
-        push(stack_o, data, 0, type);
+      lexeme_enum type = type_operation(str[i]);
+      if (operations_.empty()) {
+        operations_.push({0, type});
         continue;
       } else {
-        if (get_priority(type) > get_priority(peek(*stack_o).type)) {
-          push(stack_o, data, 0, type);
+        if (get_priority(type) > get_priority(operations_.top().type)) {
+          operations_.push({0, type});
           continue;
         } else {
-          error = calculations(stack_n, stack_o, data);
+          error = calculations();
           if (error == 0) {
             i--;
             continue;
@@ -265,17 +256,19 @@ int parser(char* str, struct stack** stack_n, struct stack** stack_o,
           }
         }
       }
+      // Открывающая скобка
     } else if (str[i] == '(') {
-      push(stack_o, data, 0, OPEN);
+      operations_.push({0, OPEN});
       continue;
+      // Закрывающая скобка
     } else if (str[i] == ')') {
-      while (peek(*stack_o).type != OPEN) {
-        error = calculations(stack_n, stack_o, data);
+      while (operations_.top().type != OPEN) {
+        error = calculations();
         if (error != 0) {
           break;
         }
       }
-      pop(stack_o);
+      operations_.pop();
       continue;
     } else {
       error = 1;
@@ -286,43 +279,49 @@ int parser(char* str, struct stack** stack_n, struct stack** stack_o,
 }
 
 //  Основная функция SMART_CALC
-int s21_smart_calc(char* src, double x, double* result) {
-  char str[256] = {0};
-  struct stack* stack_n = NULL;
-  struct stack* stack_o = NULL;
-  data_t data = {0, 0};
-  *result = 0;
+double Model::s21_smart_calc(std::string& str, double x) {
+  double result = 0;
   int error = 0;
-  remove_spaces(src, str);
-  if (!(validator(str))) {
-    error = parser(str, &stack_n, &stack_o, &data, x);
-    if (error == 0) {
-      while (!is_empty(stack_o)) {
-        error = calculations(&stack_n, &stack_o, &data);
-        if (error != 0) {
-          while (!is_empty(stack_o)) {
-            pop(&stack_o);
-          }
-          break;
+
+  // Удаления пробелов из строки
+  // str.erase(remove(str.begin(), str.end(), ' '), str.end());
+
+  error = parser(str, x);
+  if (error == 0) {
+    while (!operations_.empty()) {
+      error = calculations();
+      if (error != 0) {
+        while (!operations_.empty()) {
+          operations_.pop();
         }
-      }
-      if (error == 0) {
-        *result = peek(stack_n).value;
-      }
-      while (!is_empty(stack_n)) {
-        pop(&stack_n);
-      }
-    } else {
-      while (!is_empty(stack_o)) {
-        pop(&stack_o);
-      }
-      while (!is_empty(stack_n)) {
-        pop(&stack_n);
+        break;
       }
     }
+    if (error == 0) {
+      result = numbers_.top().value;
+    }
+    while (!numbers_.empty()) {
+      numbers_.pop();
+    }
   } else {
-    error = 1;
+    while (!operations_.empty()) {
+      operations_.pop();
+    }
+    while (!numbers_.empty()) {
+      numbers_.pop();
+    }
   }
-  return error;
+  return !(error) ? result : error;
 }
+
 }  // namespace s21
+int main() {
+  s21::Model a;
+  std::string str = "2+2";
+  double res;
+  if (a.validator(str)) {
+    res = a.s21_smart_calc(str, 0.0);
+  }
+  std::cout << res;
+  return 0;
+}
