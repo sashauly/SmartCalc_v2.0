@@ -85,16 +85,22 @@ int Model::get_priority(int type) {
 //  Возвращает тип операции
 Model::lexeme_enum Model::type_operation(char ch) {
   lexeme_enum type = NONE;
-  if ((ch) == '+') {
-    type = SUM;
-  } else if ((ch) == '-') {
-    type = SUB;
-  } else if ((ch) == '*') {
-    type = MULT;
-  } else if ((ch) == '/') {
-    type = DIV;
-  } else if ((ch) == '^') {
-    type = POW;
+  switch (ch) {
+    case '+':
+      type = SUM;
+      break;
+    case '-':
+      type = SUB;
+      break;
+    case '*':
+      type = MULT;
+      break;
+    case '/':
+      type = DIV;
+      break;
+    case '^':
+      type = POW;
+      break;
   }
   return type;
 }
@@ -138,28 +144,39 @@ int Model::func_operations(int oper, double* c) {
   int error = 0;
   a = numbers_.top().value_;
   numbers_.pop();
-  if (oper == COS) {
-    *c = std::cos(a);
-  } else if (oper == SIN) {
-    *c = sin(a);
-  } else if (oper == TAN) {
-    *c = tan(a);
-  } else if (oper == ACOS) {
-    *c = acos(a);
-  } else if (oper == ASIN) {
-    *c = asin(a);
-  } else if (oper == ATAN) {
-    *c = atan(a);
-  } else if (oper == LN) {
-    *c = log(a);
-  } else if (oper == LOG) {
-    *c = log10(a);
-  } else if (oper == SQRT) {
-    *c = sqrt(a);
-  } else if (oper == POW) {
-    b = numbers_.top().value_;
-    numbers_.pop();
-    *c = pow(b, a);
+  switch (oper) {
+    case COS:
+      *c = cos(a);
+      break;
+    case SIN:
+      *c = sin(a);
+      break;
+    case TAN:
+      *c = tan(a);
+      break;
+    case ACOS:
+      *c = acos(a);
+      break;
+    case ASIN:
+      *c = asin(a);
+      break;
+    case ATAN:
+      *c = atan(a);
+      break;
+    case LN:
+      *c = log(a);
+      break;
+    case LOG:
+      *c = log10(a);
+      break;
+    case SQRT:
+      *c = sqrt(a);
+      break;
+    case POW:
+      b = numbers_.top().value_;
+      numbers_.pop();
+      *c = pow(b, a);
+      break;
   }
   return error;
 }
@@ -207,7 +224,7 @@ void Model::parser(std::string& str, double x) {
       stream << number;
       std::string value__str = stream.str();
       numbers_.push({number, NUM});
-      i += value__str.length();
+      i += value__str.length() - 1;
       continue;
       // Число PI
     } else if (str[i] == 'p') {
@@ -229,14 +246,18 @@ void Model::parser(std::string& str, double x) {
       if (operations_.empty()) {
         operations_.push({0, type});
         continue;
+      }
+      if (get_priority(type) > get_priority(operations_.top().type_)) {
+        operations_.push({0, type});
+        continue;
       } else {
-        if (get_priority(type) > get_priority(operations_.top().type_)) {
+        if (type == POW) {
           operations_.push({0, type});
           continue;
-        } else {
-          calculations();
-          continue;
         }
+        calculations();
+        i--;
+        continue;
       }
       // Открывающая скобка
     } else if (str[i] == '(') {
@@ -266,14 +287,20 @@ double Model::s21_smart_calc(std::string& str, double x) {
 }
 
 }  // namespace s21
-int main() {
-  s21::Model a;
-  std::string str = "-1-1";
-  double res;
-  if (a.validator(str)) {
-    res = a.s21_smart_calc(str, 0.0);
-  }
-  std::cout << res;
-  // 305045.5
-  return 0;
-}
+
+// int main() {
+//   s21::Model a;
+//   std::string str = "2^2^3";
+//   // 1+2*3^sin(0.4)^3*2+1
+//   // 6.291162
+
+//   // 1+2*3^sin(0.4)^56*2+1
+//   // 6
+//   double res;
+//   if (a.validator(str)) {
+//     res = a.s21_smart_calc(str, 0.0);
+//   }
+//   std::cout << res;
+//   // 305045.5
+//   return 0;
+// }
