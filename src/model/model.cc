@@ -2,9 +2,6 @@
 
 namespace s21 {
 
-bool Model::is_letter(const char ch) {
-  return ((ch) >= 'a' && (ch) <= 'z') || ((ch) >= 'A' && (ch) <= 'Z');
-}
 bool Model::is_operation(char ch) {
   return ((ch) == '+' || (ch) == '-' || (ch) == '*' || (ch) == '/' ||
           (ch) == '^');
@@ -13,61 +10,75 @@ bool Model::is_operation(char ch) {
 //  Проверка ошибок во входной строке
 int Model::validator(std::string& str) {
   int error = 1;
-  int i = 0;
-  int open_sk = 0;
-  int close_sk = 0;
-  for (; str[i] != '\0' && str[i] != '\n' && error == 1; i++) {
-    if (str[i] == '(') open_sk++;
-    if (str[i] == ')') close_sk++;
-    if ((str[i] == '(' && str[i + 1] == ')') ||
-        (str[i] == ')' && str[i + 1] == '(') || (str[0] == ')') ||
-        (is_operation(str[i]) && is_operation(str[i + 1]))) {
-      error = 0;
-      break;
+  int open_brackets = 0;
+  int closed_brackets = 0;
+  int str_size = (int)str.size();
+  for (int i = 0; i < str_size; i++) {
+    if (is_operation(str[i])) {
+      if (is_operation(str[i + 1]) || i == str_size - 1) {
+        error = 0;
+        break;
+      }
+    }
+    if (str[i] == '(') {
+      open_brackets++;
+      if (str[i + 1] == ')') {
+        error = 0;
+        break;
+      }
+    }
+    if (str[i] == ')') {
+      closed_brackets++;
+      if (str[i + 1] == '(') {
+        error = 0;
+        break;
+      }
     }
   }
-  if (is_operation(str[i - 1])) error = 0;
-  if ((open_sk != close_sk) || (str[i - 1]) == '(') error = 0;
+  if (str.find_first_not_of(
+          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") ==
+      std::string::npos) {
+    std::string func[] = {"cos",  "sin", "tan", "acos", "asin", "atan",
+                          "sqrt", "ln",  "log", "mod",  "x",    "p"};
+    for (int j = 0; j < (int)func->size(); j++) {
+      if (str.find(func[j]) == std::string::npos) {
+        error = 0;
+        break;
+      }
+    }
+  }
+  if (open_brackets != closed_brackets) error = 0;
   return error;
 }
 //  Возвращает тип функции, полученный путем парсинга строки
-int Model::func_parser(std::string& func, int* i, lexeme_enum* type) {
-  char dst[256] = {0};
-  *type = NONE;
-  int error = 0;
-  int j = 0;
+void Model::func_parser(std::string& func, int* i, lexeme_enum* type = 0) {
+  char tmp_str[256] = {};
 
-  while (is_letter(func[*i])) {
-    dst[j] = func[*i];
-    *i += 1;
-    j++;
+  for (int j = 0; std::isalpha(func[*i]); *i += 1, j++) {
+    tmp_str[j] = func[*i];
   }
-  *i = *i - 1;
 
-  if (!strcmp(dst, "cos")) {
+  if (!strcmp(tmp_str, "cos")) {
     *type = COS;
-  } else if (!strcmp(dst, "sin")) {
+  } else if (!strcmp(tmp_str, "sin")) {
     *type = SIN;
-  } else if (!strcmp(dst, "tan")) {
+  } else if (!strcmp(tmp_str, "tan")) {
     *type = TAN;
-  } else if (!strcmp(dst, "acos")) {
+  } else if (!strcmp(tmp_str, "acos")) {
     *type = ACOS;
-  } else if (!strcmp(dst, "asin")) {
+  } else if (!strcmp(tmp_str, "asin")) {
     *type = ASIN;
-  } else if (!strcmp(dst, "atan")) {
+  } else if (!strcmp(tmp_str, "atan")) {
     *type = ATAN;
-  } else if (!strcmp(dst, "sqrt")) {
+  } else if (!strcmp(tmp_str, "sqrt")) {
     *type = SQRT;
-  } else if (!strcmp(dst, "ln")) {
+  } else if (!strcmp(tmp_str, "ln")) {
     *type = LN;
-  } else if (!strcmp(dst, "log")) {
+  } else if (!strcmp(tmp_str, "log")) {
     *type = LOG;
-  } else if (!strcmp(dst, "mod")) {
+  } else if (!strcmp(tmp_str, "mod")) {
     *type = MOD;
-  } else {
-    error = 1;
   }
-  return error;
 }
 //  Возвращает приоритет операции или функции
 int Model::get_priority(int type) {
@@ -200,23 +211,19 @@ int Model::calculations() {
 
 //  Основной парсер строки
 void Model::parser(std::string& str, double x) {
-  // Удаления пробелов из строки
   str.erase(remove(str.begin(), str.end(), ' '), str.end());
 
   for (int i = 0; i < (int)str.length(); i++) {
-    // Унарный минус
     if ((str[i] == '-' && i == 0) ||
         (i > 0 && str[i] == '-' && str[i - 1] == '(')) {
       numbers_.push({0, NUM});
       operations_.push({0, SUB});
       continue;
-      // Унарный плюс
     } else if ((str[i] == '+' && i == 0) ||
                (i > 0 && str[i] == '+' && str[i - 1] == '(')) {
       numbers_.push({0, NUM});
       operations_.push({0, SUM});
       continue;
-      // Число
     } else if (isdigit(str[i])) {
       double number = 0.0;
       number = atof(&str[i]);
@@ -226,21 +233,18 @@ void Model::parser(std::string& str, double x) {
       numbers_.push({number, NUM});
       i += value__str.length() - 1;
       continue;
-      // Число PI
     } else if (str[i] == 'p') {
       numbers_.push({PI, NUM});
       continue;
-      // x
     } else if (str[i] == 'x') {
       numbers_.push({x, NUM});
       continue;
-      // Функция
-    } else if (is_letter(str[i])) {
+    } else if (isalpha(str[i])) {
       lexeme_enum func_type = NONE;
       func_parser(str, &i, &func_type);
       operations_.push({0, func_type});
+      i--;
       continue;
-      // Операнд
     } else if (is_operation(str[i])) {
       lexeme_enum type = type_operation(str[i]);
       if (operations_.empty()) {
@@ -259,7 +263,6 @@ void Model::parser(std::string& str, double x) {
         i--;
         continue;
       }
-      // Открывающая скобка
     } else if (str[i] == '(') {
       operations_.push({0, OPEN});
       continue;
@@ -290,7 +293,7 @@ double Model::s21_smart_calc(std::string& str, double x) {
 
 // int main() {
 //   s21::Model a;
-//   std::string str = "2^2^3";
+//   std::string str = "(4^acos(2/4))";
 //   // 1+2*3^sin(0.4)^3*2+1
 //   // 6.291162
 

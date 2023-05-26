@@ -2,6 +2,23 @@
 
 #include "../model/model.h"
 
+TEST(SmartCalculator, TestValidator) {
+  s21::Model a;
+  std::string str = "(2+3)))";
+  double res = (a.validator(str));
+  EXPECT_EQ(res, 0);
+}
+
+TEST(SmartCalculator, TestFuncError) {
+  s21::Model a;
+  std::string str = "fgxh";
+  double res = (a.validator(str));
+  // if (a.validator(str)) {
+  //   res = a.s21_smart_calc(str, 0.0);
+  // }
+  EXPECT_EQ(res, 0);
+}
+
 TEST(SmartCalculator, TestOperation) {
   s21::Model a;
   std::string str = "4 + 9 + 7 + 9";

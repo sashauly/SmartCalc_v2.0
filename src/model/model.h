@@ -1,8 +1,6 @@
 #ifndef SRC_MODEL_MODEL_H_
 #define SRC_MODEL_MODEL_H_
 
-using namespace std;
-
 #include <algorithm>
 #include <cmath>
 #include <cstring>
@@ -44,20 +42,21 @@ class Model {
     OPEN,
     CLOSED
   } lexeme_enum;
+
   typedef struct Lexeme {
     double value_;
     lexeme_enum type_;
   } Lexeme;
   std::stack<Lexeme> numbers_;
   std::stack<Lexeme> operations_;
-  int func_parser(std::string& func, int* i, lexeme_enum* type);
+
+  void func_parser(std::string& func, int* i, lexeme_enum* type);
   int get_priority(int type);
   lexeme_enum type_operation(char ch);
   int binary_operations(int oper, double* c);
   int func_operations(int oper, double* c);
   int calculations();
   void parser(std::string& str, double x);
-  bool is_letter(char ch);
   bool is_operation(char ch);
 };
 
