@@ -70,15 +70,15 @@ ifeq ($(OS), Darwin)
 else
 	$(CC) $(TEST_FLAGS) $(GCOV_FLAGS) $(TEST_SRC) $(SRC) -o gcov_report $(LIBS) $(CPPFLAGS) $(LINUX_FLAGS)
 endif
-	./test
-	lcov -t "stest" -o s21_test.info -c -d .
+	./gcov_report
+	lcov -t "stest" -o s21_test.info -c -d ./ --no-external
 	genhtml -o report s21_test.info
 	$(OPEN_CMD) ./report/index.html
 
 leaks: test
 	leaks -atExit -- ./unit_test
 
-valgrind: clean $(TARGET)
+valgrind: clean
 	${CC} $(TEST_FLAGS) ${TEST_SRC} $(SRC) $(CPPFLAGS) -o valgrind_test $(LIBS) $(LINUX_FLAGS)
 	CK_FORK=no valgrind $(VALGRIND_FLAGS) --log-file=RESULT_VALGRIND.txt ./valgrind_test
 	$(OPEN_CMD) ./RESULT_VALGRIND.txt
@@ -92,7 +92,6 @@ clean:
 	rm -rf *.gcda
 	rm -rf *.gcno
 	rm -rf *.info
-	rm -rf test
 	rm -rf report
 	rm -rf gcov_report
 	rm -rf valgrind_test
