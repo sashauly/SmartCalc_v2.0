@@ -4,11 +4,10 @@
 #include <qmath.h>
 #include <stdlib.h>
 
-#include "../model/model.h"
-
 #include <QMainWindow>
 #include <QVector>
 
+#include "../controller/controller.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,7 +25,6 @@ class MainWindow : public QMainWindow {
  private:
   Ui::MainWindow *ui;
   QVector<double> x, y;
-  s21::Model model;
 
  private slots:
   void digits_numbers();

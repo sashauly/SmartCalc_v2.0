@@ -26,7 +26,8 @@
           "text": "-gdb-set disassembly-flavor intel",
           "ignoreFailures": true
         }
-      ]
+      ],
+      "visualizerFile": "/Users/stonehom/Library/Application Support/Code/User/workspaceStorage/87ff9469616538b3ba0d13e48dae84d9/tonka3000.qtvsctools/qt.natvis.xml"
     },
     {
       "name": "(lldb) Launch unit_test",
@@ -38,7 +39,8 @@
       "cwd": "${fileDirname}",
       "environment": [],
       "externalConsole": false,
-      "MIMode": "lldb"
+      "MIMode": "lldb",
+      "visualizerFile": "/Users/stonehom/Library/Application Support/Code/User/workspaceStorage/87ff9469616538b3ba0d13e48dae84d9/tonka3000.qtvsctools/qt.natvis.xml"
     },
     {
       "name": "(lldb) Launch model",
@@ -50,7 +52,8 @@
       "cwd": "${fileDirname}",
       "environment": [],
       "externalConsole": false,
-      "MIMode": "lldb"
+      "MIMode": "lldb",
+      "visualizerFile": "/Users/stonehom/Library/Application Support/Code/User/workspaceStorage/87ff9469616538b3ba0d13e48dae84d9/tonka3000.qtvsctools/qt.natvis.xml"
     }
   ]
 }

@@ -87,29 +87,29 @@ void MainWindow::operations() {
 
   QString str = ui->result_show->text();
   int len = str.isNull() ? 0 : str.length();
-//  if (len != 0) {
-//    if ((is_number(str[len - 1]) || is_operation(str[len - 1]) ||
-//         str[len - 1] == 'x' || result_label[len - 1] == 'i') &&
-//        str[len - 1] != '.') {
-//      if (button == ui->pushButton_open) {
-//        if (!is_operation(str[len - 1])) {
-//          ui->result_show->setText(result_label + "*(");
-//        } else {
-//          ui->result_show->setText(result_label + "(");
-//        }
-//      }
-//    }
-//    if (str[len - 1] != '.' && str[len - 1] != '(' &&
-//        !is_operation(str[len - 1])) {
-//      if (button == ui->pushButton_close) {
-//        ui->result_show->setText(result_label + ")");
-//      }
-//    }
-//  } else {
-//    if (button == ui->pushButton_open) {
-//      ui->result_show->setText(result_label + "(");
-//    }
-//  }
+  //  if (len != 0) {
+  //    if ((is_number(str[len - 1]) || is_operation(str[len - 1]) ||
+  //         str[len - 1] == 'x' || result_label[len - 1] == 'i') &&
+  //        str[len - 1] != '.') {
+  //      if (button == ui->pushButton_open) {
+  //        if (!is_operation(str[len - 1])) {
+  //          ui->result_show->setText(result_label + "*(");
+  //        } else {
+  //          ui->result_show->setText(result_label + "(");
+  //        }
+  //      }
+  //    }
+  //    if (str[len - 1] != '.' && str[len - 1] != '(' &&
+  //        !is_operation(str[len - 1])) {
+  //      if (button == ui->pushButton_close) {
+  //        ui->result_show->setText(result_label + ")");
+  //      }
+  //    }
+  //  } else {
+  //    if (button == ui->pushButton_open) {
+  //      ui->result_show->setText(result_label + "(");
+  //    }
+  //  }
 }
 
 void MainWindow::arithmetic() {
@@ -117,35 +117,35 @@ void MainWindow::arithmetic() {
 
   QString str = ui->result_show->text();
   int len = str.isNull() ? 0 : str.length();
-//  if (len != 0) {
-//    if ((is_number(str[len - 1])) || str[len - 1] == ')' ||
-//        str[len - 1] == 'x' || str[len - 1] == 'i') {
-//      if (button == ui->pushButton_plus) {
-//        ui->result_show->setText(str + "+");
-//      } else if (button == ui->pushButton_minus) {
-//        ui->result_show->setText(str + "-");
-//      } else if (button == ui->pushButton_mult) {
-//        ui->result_show->setText(str + "*");
-//      } else if (button == ui->pushButton_div) {
-//        ui->result_show->setText(str + "/");
-//      } else if (button == ui->pushButton_pow) {
-//        ui->result_show->setText(str + "^");
-//      }
-//    }
-//    if (str[len - 1] == '(') {
-//      if (button == ui->pushButton_plus) {
-//        ui->result_show->setText(str + "+");
-//      } else if (button == ui->pushButton_minus) {
-//        ui->result_show->setText(str + "-");
-//      }
-//    }
-//  } else {
-//    if (button == ui->pushButton_plus) {
-//      ui->result_show->setText(str + "+");
-//    } else if (button == ui->pushButton_minus) {
-//      ui->result_show->setText(str + "-");
-//    }
-//  }
+  //  if (len != 0) {
+  //    if ((is_number(str[len - 1])) || str[len - 1] == ')' ||
+  //        str[len - 1] == 'x' || str[len - 1] == 'i') {
+  //      if (button == ui->pushButton_plus) {
+  //        ui->result_show->setText(str + "+");
+  //      } else if (button == ui->pushButton_minus) {
+  //        ui->result_show->setText(str + "-");
+  //      } else if (button == ui->pushButton_mult) {
+  //        ui->result_show->setText(str + "*");
+  //      } else if (button == ui->pushButton_div) {
+  //        ui->result_show->setText(str + "/");
+  //      } else if (button == ui->pushButton_pow) {
+  //        ui->result_show->setText(str + "^");
+  //      }
+  //    }
+  //    if (str[len - 1] == '(') {
+  //      if (button == ui->pushButton_plus) {
+  //        ui->result_show->setText(str + "+");
+  //      } else if (button == ui->pushButton_minus) {
+  //        ui->result_show->setText(str + "-");
+  //      }
+  //    }
+  //  } else {
+  //    if (button == ui->pushButton_plus) {
+  //      ui->result_show->setText(str + "+");
+  //    } else if (button == ui->pushButton_minus) {
+  //      ui->result_show->setText(str + "-");
+  //    }
+  //  }
 }
 
 void MainWindow::func() {
@@ -153,85 +153,87 @@ void MainWindow::func() {
   QString result_label = ui->result_show->text();
 
   int len = result_label.isNull() ? 0 : result_label.length();
-//  if (len != 0) {
-//    if (result_label[len - 1] != 'x') {
-//      if (is_number(result_label[len - 1]) || result_label[len - 1] == ')' ||
-//          result_label[len - 1] == 'i') {
-//        if (button == ui->pushButton_sin) {
-//          ui->result_show->setText(result_label + "*sin(");
-//        } else if (button == ui->pushButton_cos) {
-//          ui->result_show->setText(result_label + "*cos(");
-//        } else if (button == ui->pushButton_tan) {
-//          ui->result_show->setText(result_label + "*tan(");
-//        } else if (button == ui->pushButton_asin) {
-//          ui->result_show->setText(result_label + "*asin(");
-//        } else if (button == ui->pushButton_acos) {
-//          ui->result_show->setText(result_label + "*acos(");
-//        } else if (button == ui->pushButton_atan) {
-//          ui->result_show->setText(result_label + "*atan(");
-//        } else if (button == ui->pushButton_sqrt) {
-//          ui->result_show->setText(result_label + "*sqrt(");
-//        } else if (button == ui->pushButton_mod) {
-//          ui->result_show->setText(result_label + "*mod");
-//        } else if (button == ui->pushButton_ln) {
-//          ui->result_show->setText(result_label + "*ln(");
-//        } else if (button == ui->pushButton_log) {
-//          ui->result_show->setText(result_label + "*log(");
-//        } else if (button == ui->pushButton_x) {
-//          ui->result_show->setText(result_label + "*x");
-//        }
-//      }
-//      if (is_operation(result_label[len - 1]) || result_label[len - 1] == '(') {
-//        if (button == ui->pushButton_sin) {
-//          ui->result_show->setText(result_label + "sin(");
-//        } else if (button == ui->pushButton_cos) {
-//          ui->result_show->setText(result_label + "cos(");
-//        } else if (button == ui->pushButton_tan) {
-//          ui->result_show->setText(result_label + "tan(");
-//        } else if (button == ui->pushButton_asin) {
-//          ui->result_show->setText(result_label + "asin(");
-//        } else if (button == ui->pushButton_acos) {
-//          ui->result_show->setText(result_label + "acos(");
-//        } else if (button == ui->pushButton_atan) {
-//          ui->result_show->setText(result_label + "atan(");
-//        } else if (button == ui->pushButton_sqrt) {
-//          ui->result_show->setText(result_label + "sqrt(");
-//        } else if (button == ui->pushButton_mod) {
-//          ui->result_show->setText(result_label + "mod");
-//        } else if (button == ui->pushButton_ln) {
-//          ui->result_show->setText(result_label + "ln(");
-//        } else if (button == ui->pushButton_log) {
-//          ui->result_show->setText(result_label + "log(");
-//        } else if (button == ui->pushButton_x) {
-//          ui->result_show->setText(result_label + "x");
-//        }
-//      }
-//    }
-//  } else {
-//    if (button == ui->pushButton_sin) {
-//      ui->result_show->setText(result_label + "sin(");
-//    } else if (button == ui->pushButton_cos) {
-//      ui->result_show->setText(result_label + "cos(");
-//    } else if (button == ui->pushButton_tan) {
-//      ui->result_show->setText(result_label + "tan(");
-//    } else if (button == ui->pushButton_asin) {
-//      ui->result_show->setText(result_label + "asin(");
-//    } else if (button == ui->pushButton_acos) {
-//      ui->result_show->setText(result_label + "acos(");
-//    } else if (button == ui->pushButton_atan) {
-//      ui->result_show->setText(result_label + "atan(");
-//    } else if (button == ui->pushButton_sqrt) {
-//      ui->result_show->setText(result_label + "sqrt(");
-//    } else if (button == ui->pushButton_mod) {
-//      ui->result_show->setText(result_label + "mod");
-//    } else if (button == ui->pushButton_ln) {
-//      ui->result_show->setText(result_label + "ln(");
-//    } else if (button == ui->pushButton_log) {
-//      ui->result_show->setText(result_label + "log(");
-//    } else if (button == ui->pushButton_x) {
-//      ui->result_show->setText(result_label + "x");
-//    }
-//  }
+  //  if (len != 0) {
+  //    if (result_label[len - 1] != 'x') {
+  //      if (is_number(result_label[len - 1]) || result_label[len - 1] == ')'
+  //      ||
+  //          result_label[len - 1] == 'i') {
+  //        if (button == ui->pushButton_sin) {
+  //          ui->result_show->setText(result_label + "*sin(");
+  //        } else if (button == ui->pushButton_cos) {
+  //          ui->result_show->setText(result_label + "*cos(");
+  //        } else if (button == ui->pushButton_tan) {
+  //          ui->result_show->setText(result_label + "*tan(");
+  //        } else if (button == ui->pushButton_asin) {
+  //          ui->result_show->setText(result_label + "*asin(");
+  //        } else if (button == ui->pushButton_acos) {
+  //          ui->result_show->setText(result_label + "*acos(");
+  //        } else if (button == ui->pushButton_atan) {
+  //          ui->result_show->setText(result_label + "*atan(");
+  //        } else if (button == ui->pushButton_sqrt) {
+  //          ui->result_show->setText(result_label + "*sqrt(");
+  //        } else if (button == ui->pushButton_mod) {
+  //          ui->result_show->setText(result_label + "*mod");
+  //        } else if (button == ui->pushButton_ln) {
+  //          ui->result_show->setText(result_label + "*ln(");
+  //        } else if (button == ui->pushButton_log) {
+  //          ui->result_show->setText(result_label + "*log(");
+  //        } else if (button == ui->pushButton_x) {
+  //          ui->result_show->setText(result_label + "*x");
+  //        }
+  //      }
+  //      if (is_operation(result_label[len - 1]) || result_label[len - 1] ==
+  //      '(') {
+  //        if (button == ui->pushButton_sin) {
+  //          ui->result_show->setText(result_label + "sin(");
+  //        } else if (button == ui->pushButton_cos) {
+  //          ui->result_show->setText(result_label + "cos(");
+  //        } else if (button == ui->pushButton_tan) {
+  //          ui->result_show->setText(result_label + "tan(");
+  //        } else if (button == ui->pushButton_asin) {
+  //          ui->result_show->setText(result_label + "asin(");
+  //        } else if (button == ui->pushButton_acos) {
+  //          ui->result_show->setText(result_label + "acos(");
+  //        } else if (button == ui->pushButton_atan) {
+  //          ui->result_show->setText(result_label + "atan(");
+  //        } else if (button == ui->pushButton_sqrt) {
+  //          ui->result_show->setText(result_label + "sqrt(");
+  //        } else if (button == ui->pushButton_mod) {
+  //          ui->result_show->setText(result_label + "mod");
+  //        } else if (button == ui->pushButton_ln) {
+  //          ui->result_show->setText(result_label + "ln(");
+  //        } else if (button == ui->pushButton_log) {
+  //          ui->result_show->setText(result_label + "log(");
+  //        } else if (button == ui->pushButton_x) {
+  //          ui->result_show->setText(result_label + "x");
+  //        }
+  //      }
+  //    }
+  //  } else {
+  //    if (button == ui->pushButton_sin) {
+  //      ui->result_show->setText(result_label + "sin(");
+  //    } else if (button == ui->pushButton_cos) {
+  //      ui->result_show->setText(result_label + "cos(");
+  //    } else if (button == ui->pushButton_tan) {
+  //      ui->result_show->setText(result_label + "tan(");
+  //    } else if (button == ui->pushButton_asin) {
+  //      ui->result_show->setText(result_label + "asin(");
+  //    } else if (button == ui->pushButton_acos) {
+  //      ui->result_show->setText(result_label + "acos(");
+  //    } else if (button == ui->pushButton_atan) {
+  //      ui->result_show->setText(result_label + "atan(");
+  //    } else if (button == ui->pushButton_sqrt) {
+  //      ui->result_show->setText(result_label + "sqrt(");
+  //    } else if (button == ui->pushButton_mod) {
+  //      ui->result_show->setText(result_label + "mod");
+  //    } else if (button == ui->pushButton_ln) {
+  //      ui->result_show->setText(result_label + "ln(");
+  //    } else if (button == ui->pushButton_log) {
+  //      ui->result_show->setText(result_label + "log(");
+  //    } else if (button == ui->pushButton_x) {
+  //      ui->result_show->setText(result_label + "x");
+  //    }
+  //  }
 }
 
 void MainWindow::clear() {
@@ -249,62 +251,80 @@ void MainWindow::on_pushButton_dot_clicked() {
   int count = 0;
   QString str = ui->result_show->text();
   int len = str.isNull() ? 0 : str.length();
-//  for (int i = 0; i < len; i++) {
-//    if (str[i] == '.') {
-//      count = 1;
-//    } else if (!is_number(str[i])) {
-//      count = 0;
-//    }
-//  }
-//  if (len != 0) {
-//    if (count == 0 && (is_number(str[len - 1]))) {
-//      ui->result_show->setText(ui->result_show->text() + ".");
-//    }
-//  }
+  //  for (int i = 0; i < len; i++) {
+  //    if (str[i] == '.') {
+  //      count = 1;
+  //    } else if (!is_number(str[i])) {
+  //      count = 0;
+  //    }
+  //  }
+  //  if (len != 0) {
+  //    if (count == 0 && (is_number(str[len - 1]))) {
+  //      ui->result_show->setText(ui->result_show->text() + ".");
+  //    }
+  //  }
 }
 
 void MainWindow::on_pushButton_pi_clicked() {
   int count = 0;
   QString str = ui->result_show->text();
   int len = str.isNull() ? 0 : str.length();
-//  for (int i = 0; i < len; i++) {
-//    if (str[i] == '.') {
-//      count = 1;
-//    } else if (!is_number(str[i])) {
-//      count = 0;
-//    }
-//  }
+  //  for (int i = 0; i < len; i++) {
+  //    if (str[i] == '.') {
+  //      count = 1;
+  //    } else if (!is_number(str[i])) {
+  //      count = 0;
+  //    }
+  //  }
   int j = len - 1;
-//  if (len == 0) {
-//    ui->result_show->setText(ui->result_show->text() + "pi");
-//  } else if (count == 0 && (!is_number(str[j]) && str[j] != '.')) {
-//    ui->result_show->setText(ui->result_show->text() + "pi");
-//  }
+  //  if (len == 0) {
+  //    ui->result_show->setText(ui->result_show->text() + "pi");
+  //  } else if (count == 0 && (!is_number(str[j]) && str[j] != '.')) {
+  //    ui->result_show->setText(ui->result_show->text() + "pi");
+  //  }
 }
 
 void MainWindow::on_pushButton_equal_clicked() {
-  QString str_expr = ui->result_show->text();
-  QByteArray ba = str_expr.toLocal8Bit();
-  char *c_str2 = ba.data();
-  char outStr[256] = {0};
-  double x = 0.0;
-  int error = 0;
-  double result = 0.0;
-  if (str_expr == "") {
-    ui->result_show->setText("Ошибка ввода");
-  } else {
-    if (str_expr.contains('x')) {
-      str_expr.replace("x", ui->x_value->text());
-      x = ui->x_value->text().toDouble();
-    }
+    s21::Controller controller;
+    double x = 0.0;
+    QString str_expr = ui->result_show->text();
+    QByteArray ba = str_expr.toLocal8Bit();
+    char *c_str2 = ba.data();
     std::string str = c_str2;
-//    result = s21_smart_calc(str, x);
-    if (error == 0) {
-      sprintf(outStr, "%.15g", result);
-      ui->result_show->setText(outStr);
-    } else {
-      ui->result_show->setText("ERROR");
-    }
+
+  if (controller.Validate(str) == 0) {
+    ui->result_show->setText("");
+  } else if (str_expr.contains('x')) {
+     str_expr.replace("x", ui->x_value->text());
+     x = ui->x_value->text().toDouble();
+  } else {
+    double result = controller.Calculate(str, 0.0);
+
+    QString numberResult = QString::number(result);
+    ui->result_show->setText(numberResult);
+
+    //   QString str_expr = ui->result_show->text();
+    //   QByteArray ba = str_expr.toLocal8Bit();
+    //   char *c_str2 = ba.data();
+    //   char outStr[256] = {0};
+    //   double x = 0.0;
+    //   int error = 0;
+    //   double result = 0.0;
+    //   if (str_expr == "") {
+    //     ui->result_show->setText("Ошибка ввода");
+    //   } else {
+    //     if (str_expr.contains('x')) {
+    //       str_expr.replace("x", ui->x_value->text());
+    //       x = ui->x_value->text().toDouble();
+    //     }
+    //     std::string str = c_str2;
+    // //    result = s21_smart_calc(str, x);
+    //     if (error == 0) {
+    //       sprintf(outStr, "%.15g", result);
+    //       ui->result_show->setText(outStr);
+    //     } else {
+    //       ui->result_show->setText("ERROR");
+    //     }
   }
 }
 
@@ -362,7 +382,7 @@ void MainWindow::make_graph() {
       QByteArray ba = str.toLatin1();
       char *char_array = ba.data();
       std::string str = char_array;
-//      Y = s21_smart_calc(str, X);
+      //      Y = s21_smart_calc(str, X);
       y.push_back(Y);
       X += step;
     }

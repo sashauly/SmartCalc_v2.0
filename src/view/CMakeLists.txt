@@ -19,7 +19,7 @@ set(PROJECT_SOURCES
         view.cpp
         view.h
         view.ui
-        ../../model/model.h
+        ../../controller/controller.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
