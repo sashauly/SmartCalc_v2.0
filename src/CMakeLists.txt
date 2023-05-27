@@ -15,11 +15,14 @@ find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
-        main.cpp
-        view.cpp
-        view.h
-        view.ui
-        ../../controller/controller.h
+        ./view/main.cc
+        ./view/app/view.cc
+        ./view/app/view.h
+        ./view/app/view.ui
+        model/model.h
+        model/model.cc
+        controller/controller.h
+        controller/controller.cc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -55,7 +58,7 @@ set_target_properties(SmartCalc PROPERTIES
     WIN32_EXECUTABLE TRUE
 )
 
-add_subdirectory(QCustomPlot-library)
+add_subdirectory(view/qcp)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE qcustomplot)
 target_compile_definitions(${PROJECT_NAME} PRIVATE QCUSTOMPLOT_USE_LIBRARY)

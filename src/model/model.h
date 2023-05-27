@@ -17,8 +17,8 @@ class Model {
  public:
   Model() {}
   ~Model() {}
-  double s21_smart_calc(std::string& str, double x);
-  int validator(std::string& str);
+  double Calculator(std::string& str, double x);
+  int Validator(std::string& str);
 
  private:
   typedef enum {
@@ -50,13 +50,18 @@ class Model {
   std::stack<Lexeme> numbers_;
   std::stack<Lexeme> operations_;
 
-  void func_parser(std::string& func, int* i, lexeme_enum* type);
-  int get_priority(int type);
-  lexeme_enum type_operation(char ch);
-  int binary_operations(int oper, double* c);
-  int func_operations(int oper, double* c);
-  int calculations();
-  void parser(std::string& str, double x);
+  // void checkUnary(std::string& str, int* i);
+  // void checkDigit(std::string& str, int* i, double* x);
+  // void checkFunction(std::string& str, int* i);
+  // void checkOperation(std::string& str, int* i);
+
+  void funcParser(std::string& func, int* i, lexeme_enum* type);
+  int getPriority(int type);
+  lexeme_enum typeOperation(char ch);
+  int binaryOperations(int oper, double* c);
+  int funcOperations(int oper, double* c);
+  int Calculations();
+  void Parser(std::string& str, double x);
   bool is_operation(char ch);
 };
 

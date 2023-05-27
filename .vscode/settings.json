@@ -85,7 +85,11 @@
     "thread": "cpp",
     "cinttypes": "cpp",
     "__memory": "cpp",
-    "regex": "cpp"
+    "regex": "cpp",
+    "codecvt": "cpp",
+    "list": "cpp",
+    "source_location": "cpp",
+    "future": "cpp"
   },
   "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
 }

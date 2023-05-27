@@ -8,7 +8,7 @@ bool Model::is_operation(char ch) {
 }
 
 //  Проверка ошибок во входной строке
-int Model::validator(std::string& str) {
+int Model::Validator(std::string& str) {
   int error = 1;
   int open_brackets = 0;
   int closed_brackets = 0;
@@ -39,7 +39,7 @@ int Model::validator(std::string& str) {
           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") ==
       std::string::npos) {
     std::string func[] = {"cos",  "sin", "tan", "acos", "asin", "atan",
-                          "sqrt", "ln",  "log", "mod",  "x",    "p"};
+                          "sqrt", "ln",  "log", "mod",  "x",    "pi"};
     for (int j = 0; j < (int)func->size(); j++) {
       if (str.find(func[j]) == std::string::npos) {
         error = 0;
@@ -51,7 +51,7 @@ int Model::validator(std::string& str) {
   return error;
 }
 //  Возвращает тип функции, полученный путем парсинга строки
-void Model::func_parser(std::string& func, int* i, lexeme_enum* type = 0) {
+void Model::funcParser(std::string& func, int* i, lexeme_enum* type = 0) {
   char tmp_str[256] = {};
 
   for (int j = 0; std::isalpha(func[*i]); *i += 1, j++) {
@@ -81,7 +81,7 @@ void Model::func_parser(std::string& func, int* i, lexeme_enum* type = 0) {
   }
 }
 //  Возвращает приоритет операции или функции
-int Model::get_priority(int type) {
+int Model::getPriority(int type) {
   int priority = 0;
   if (type == SUM || type == SUB)
     priority = 1;
@@ -94,7 +94,7 @@ int Model::get_priority(int type) {
   return priority;
 }
 //  Возвращает тип операции
-Model::lexeme_enum Model::type_operation(char ch) {
+Model::lexeme_enum Model::typeOperation(char ch) {
   lexeme_enum type = NONE;
   switch (ch) {
     case '+':
@@ -117,7 +117,7 @@ Model::lexeme_enum Model::type_operation(char ch) {
 }
 
 //  Вычисление бинарных операций
-int Model::binary_operations(int oper, double* c) {
+int Model::binaryOperations(int oper, double* c) {
   double a = 0, b = 0;
   *c = 0;
   int error = 0;
@@ -149,7 +149,7 @@ int Model::binary_operations(int oper, double* c) {
   return error;
 }
 //  Вычисление функций
-int Model::func_operations(int oper, double* c) {
+int Model::funcOperations(int oper, double* c) {
   double a = 0, b = 0;
   *c = 0;
   int error = 0;
@@ -193,14 +193,14 @@ int Model::func_operations(int oper, double* c) {
 }
 
 //  Вычисление в зависимости от оператора в стеке
-int Model::calculations() {
+int Model::Calculations() {
   double c = 0;
   int error = 0;
   int oper = operations_.top().type_;
   if (oper >= SUM && oper <= MOD) {
-    error = binary_operations(oper, &c);
+    error = binaryOperations(oper, &c);
   } else if (oper >= COS && oper <= POW) {
-    error = func_operations(oper, &c);
+    error = funcOperations(oper, &c);
   }
   operations_.pop();
   if (error == 0) {
@@ -210,7 +210,7 @@ int Model::calculations() {
 }
 
 //  Основной парсер строки
-void Model::parser(std::string& str, double x) {
+void Model::Parser(std::string& str, double x) {
   str.erase(remove(str.begin(), str.end(), ' '), str.end());
 
   for (int i = 0; i < (int)str.length(); i++) {
@@ -241,17 +241,17 @@ void Model::parser(std::string& str, double x) {
       continue;
     } else if (isalpha(str[i])) {
       lexeme_enum func_type = NONE;
-      func_parser(str, &i, &func_type);
+      funcParser(str, &i, &func_type);
       operations_.push({0, func_type});
       i--;
       continue;
     } else if (is_operation(str[i])) {
-      lexeme_enum type = type_operation(str[i]);
+      lexeme_enum type = typeOperation(str[i]);
       if (operations_.empty()) {
         operations_.push({0, type});
         continue;
       }
-      if (get_priority(type) > get_priority(operations_.top().type_)) {
+      if (getPriority(type) > getPriority(operations_.top().type_)) {
         operations_.push({0, type});
         continue;
       } else {
@@ -259,7 +259,7 @@ void Model::parser(std::string& str, double x) {
           operations_.push({0, type});
           continue;
         }
-        calculations();
+        Calculations();
         i--;
         continue;
       }
@@ -269,7 +269,7 @@ void Model::parser(std::string& str, double x) {
       // Закрывающая скобка
     } else if (str[i] == ')') {
       while (operations_.top().type_ != OPEN) {
-        calculations();
+        Calculations();
       }
       operations_.pop();
       continue;
@@ -278,12 +278,12 @@ void Model::parser(std::string& str, double x) {
 }
 
 //  Основная функция SMART_CALC
-double Model::s21_smart_calc(std::string& str, double x) {
+double Model::Calculator(std::string& str, double x) {
   double result = 0;
 
-  parser(str, x);
+  Parser(str, x);
   while (!operations_.empty()) {
-    calculations();
+    Calculations();
   }
   result = numbers_.top().value_;
   return result;

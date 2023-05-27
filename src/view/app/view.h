@@ -5,9 +5,11 @@
 #include <stdlib.h>
 
 #include <QMainWindow>
+#include <QPushButton>
 #include <QVector>
+#include <cctype>
 
-#include "../controller/controller.h"
+#include "../../controller/controller.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,13 +27,28 @@ class MainWindow : public QMainWindow {
  private:
   Ui::MainWindow *ui;
   QVector<double> x, y;
+  s21::Controller controller;
+
+  QList<QPushButton *> buttonsDigits;
+  QList<QPushButton *> buttonsOperations;
+  QList<QPushButton *> buttonsFunctions;
+
+  bool isNumber(QChar ch);
+  bool isLetter(QChar ch);
+  bool isOperation(QChar ch);
 
  private slots:
-  void digits_numbers();
-  void operations();
-  void arithmetic();
-  void func();
-  void clear();
+  void setupButtons();
+  void setupDigitButtons();
+  void setupOperationButtons();
+  void setupFunctionButtons();
+
+  void digitInput();
+  void bracketInput();
+  void operationInput();
+  void functionInput();
+  void clearInput();
+
   void on_pushButton_dot_clicked();
   void on_pushButton_pi_clicked();
   void on_pushButton_equal_clicked();

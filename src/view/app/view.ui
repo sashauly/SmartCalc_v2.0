@@ -31,9 +31,6 @@
     <height>540</height>
    </size>
   </property>
-  <property name="windowTitle">
-   <string>SmartCalc v1.0</string>
-  </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow{
 background-color: rgb(253, 251, 254);
