@@ -68,7 +68,7 @@ clean:
 
 open:
 ifeq ($(OS), Darwin)
-	$(OPEN_CMD) build/SmartCalc.app/Contents/MacOS/SmartCalc
+	./build/SmartCalc.app/Contents/MacOS/SmartCalc
 else
 	./build/SmartCalc
 endif
