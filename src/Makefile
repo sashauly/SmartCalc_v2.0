@@ -8,6 +8,8 @@ LINUX_FLAGS =-lrt -lpthread -lm
 GCOV_FLAGS?=--coverage#-fprofile-arcs -ftest-coverage
 LIBS=-lgtest
 VALGRIND_FLAGS=--trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all --verbose
+#For Linux support
+CMAKE_FLAGS=-DCMAKE_PREFIX_PATH="/home/user/Qt/6.5.1/gcc_64"
 
 SRC=./model/model.cc
 
@@ -23,10 +25,10 @@ ifeq ($(OS),Darwin)
 	OPEN_CMD = open
 endif
 
-all: tests install dvi open
+all: tests gcov_report install dist dvi open
 
-install: clean
-	mkdir -p build && cd build && cmake ..
+install: clean uninstall
+	mkdir -p build && cd build && cmake .. $(CMAKE_FLAGS)
 	cd build && make
 
 uninstall:
@@ -65,7 +67,11 @@ clean:
 	rm -rf *.zip
 
 open:
+ifeq ($(OS), Darwin)
 	$(OPEN_CMD) build/SmartCalc.app/Contents/MacOS/SmartCalc
+else
+	./build/SmartCalc
+endif
 
 leaks: test
 	leaks -atExit -- ./unit_test
