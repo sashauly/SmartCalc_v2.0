@@ -33,6 +33,8 @@ class MainWindow : public QMainWindow {
   QList<QPushButton *> buttonsOperations;
   QList<QPushButton *> buttonsFunctions;
 
+  void eventLoop();
+
   bool isNumber(QChar ch);
   bool isLetter(QChar ch);
   bool isOperation(QChar ch);
@@ -44,16 +46,18 @@ class MainWindow : public QMainWindow {
   void setupFunctionButtons();
 
   void digitInput();
+  void xInput();
   void bracketInput();
   void operationInput();
   void functionInput();
   void clearInput();
+  void clearOutput();
 
   void on_pushButton_dot_clicked();
-  void on_pushButton_pi_clicked();
   void on_pushButton_equal_clicked();
-  void graph();
-  void make_graph();
-  void on_pushButton_clear_graph_clicked();
+
+  void setupGraph();
+  void drawGraph();
+  void clearGraph();
 };
 #endif  // VIEW_H

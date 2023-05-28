@@ -1182,12 +1182,13 @@ QPushButton:pressed {
     <property name="styleSheet">
      <string notr="true">QLineEdit {
 	padding-right: 5px;
-padding-left: 5px; 
+	padding-left: 5px; 
 	border-style: outset;
 	border-width: 2px;
 	border-radius: 25px;
 	border: none;
-background-color : rgb(229,229,241);
+	color: black;
+	background-color : rgb(229,229,241);
 }</string>
     </property>
     <property name="alignment">

@@ -2,7 +2,7 @@
 
 namespace s21 {
 
-bool Model::is_operation(char ch) {
+bool Model::isOperation(char ch) {
   return ((ch) == '+' || (ch) == '-' || (ch) == '*' || (ch) == '/' ||
           (ch) == '^');
 }
@@ -12,10 +12,13 @@ int Model::Validator(std::string& str) {
   int error = 1;
   int open_brackets = 0;
   int closed_brackets = 0;
+  int count_dot = 0;
   int str_size = (int)str.size();
+
   for (int i = 0; i < str_size; i++) {
-    if (is_operation(str[i])) {
-      if (is_operation(str[i + 1]) || i == str_size - 1) {
+    if (isOperation(str[i]) || str[i] == 'm') {
+      if (isOperation(str[i + 1]) || (str[i + 1] == '.') ||
+          (str[i + 1] == ',') || i == str_size - 1) {
         error = 0;
         break;
       }
@@ -29,25 +32,34 @@ int Model::Validator(std::string& str) {
     }
     if (str[i] == ')') {
       closed_brackets++;
-      if (str[i + 1] == '(') {
-        error = 0;
-        break;
-      }
-    }
-  }
-  if (str.find_first_not_of(
-          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ") ==
-      std::string::npos) {
-    std::string func[] = {"cos",  "sin", "tan", "acos", "asin", "atan",
-                          "sqrt", "ln",  "log", "mod",  "x",    "pi"};
-    for (int j = 0; j < (int)func->size(); j++) {
-      if (str.find(func[j]) == std::string::npos) {
+      if (str[i + 1] == '(' || isOperation(str[i - 1])) {
         error = 0;
         break;
       }
     }
   }
   if (open_brackets != closed_brackets) error = 0;
+
+  if (str[0] == '.' || str[0] == ',') {
+    error = 0;
+  }
+  for (int i = 0; i < str_size; i++) {
+    if (isdigit(str[i])) {
+      while (isdigit(str[i]) || str[i] == '.') {
+        if (str[i] == ',') str[i] = '.';
+        if (str[i] == '.') count_dot++;
+        i++;
+      }
+      if (count_dot > 1) {
+        error = 0;
+        break;
+      }
+    } else {
+      count_dot = 0;
+      continue;
+    }
+  }
+
   return error;
 }
 //  Возвращает тип функции, полученный путем парсинга строки
@@ -191,7 +203,6 @@ int Model::funcOperations(int oper, double* c) {
   }
   return error;
 }
-
 //  Вычисление в зависимости от оператора в стеке
 int Model::Calculations() {
   double c = 0;
@@ -234,7 +245,8 @@ void Model::Parser(std::string& str, double x) {
       i += value__str.length() - 1;
       continue;
     } else if (str[i] == 'p') {
-      numbers_.push({PI, NUM});
+      numbers_.push({std::acos(-1), NUM});
+      i++;
       continue;
     } else if (str[i] == 'x') {
       numbers_.push({x, NUM});
@@ -245,7 +257,7 @@ void Model::Parser(std::string& str, double x) {
       operations_.push({0, func_type});
       i--;
       continue;
-    } else if (is_operation(str[i])) {
+    } else if (isOperation(str[i])) {
       lexeme_enum type = typeOperation(str[i]);
       if (operations_.empty()) {
         operations_.push({0, type});

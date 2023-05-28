@@ -9,15 +9,13 @@
 #include <stack>
 #include <string>
 
-#define PI acos(-1)
-
 namespace s21 {
 
 class Model {
  public:
   Model() {}
   ~Model() {}
-  double Calculator(std::string& str, double x);
+  double Calculator(std::string& str, double x = 0.0);
   int Validator(std::string& str);
 
  private:
@@ -47,13 +45,9 @@ class Model {
     double value_;
     lexeme_enum type_;
   } Lexeme;
+
   std::stack<Lexeme> numbers_;
   std::stack<Lexeme> operations_;
-
-  // void checkUnary(std::string& str, int* i);
-  // void checkDigit(std::string& str, int* i, double* x);
-  // void checkFunction(std::string& str, int* i);
-  // void checkOperation(std::string& str, int* i);
 
   void funcParser(std::string& func, int* i, lexeme_enum* type);
   int getPriority(int type);
@@ -62,7 +56,7 @@ class Model {
   int funcOperations(int oper, double* c);
   int Calculations();
   void Parser(std::string& str, double x);
-  bool is_operation(char ch);
+  bool isOperation(char ch);
 };
 
 }  // namespace s21
