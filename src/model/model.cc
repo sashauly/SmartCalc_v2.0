@@ -4,7 +4,8 @@ namespace s21 {
 
 bool Model::isOperation(char ch) {
   return ((ch) == '+' || (ch) == '-' || (ch) == '*' || (ch) == '/' ||
-          (ch) == '^');
+          (ch) == '^') ||
+         (ch) == '%';
 }
 
 //  Проверка ошибок во входной строке
@@ -16,9 +17,10 @@ int Model::Validator(std::string& str) {
   int str_size = (int)str.size();
 
   for (int i = 0; i < str_size; i++) {
-    if (isOperation(str[i]) || str[i] == 'm') {
+    if (isOperation(str[i])) {
       if (isOperation(str[i + 1]) || (str[i + 1] == '.') ||
-          (str[i + 1] == ',') || i == str_size - 1) {
+          (str[i + 1] == ',') || i == str_size - 1 ||
+          (i == 0 && str[i] != '+' && str[i] != '-')) {
         error = 0;
         break;
       }
@@ -88,8 +90,6 @@ void Model::funcParser(std::string& func, int* i, lexeme_enum* type = 0) {
     *type = LN;
   } else if (!strcmp(tmp_str, "log")) {
     *type = LOG;
-  } else if (!strcmp(tmp_str, "mod")) {
-    *type = MOD;
   }
 }
 //  Возвращает приоритет операции или функции
@@ -123,6 +123,9 @@ Model::lexeme_enum Model::typeOperation(char ch) {
       break;
     case '^':
       type = POW;
+      break;
+    case '%':
+      type = MOD;
       break;
   }
   return type;
@@ -302,20 +305,3 @@ double Model::Calculator(std::string& str, double x) {
 }
 
 }  // namespace s21
-
-// int main() {
-//   s21::Model a;
-//   std::string str = "(4^acos(2/4))";
-//   // 1+2*3^sin(0.4)^3*2+1
-//   // 6.291162
-
-//   // 1+2*3^sin(0.4)^56*2+1
-//   // 6
-//   double res;
-//   if (a.validator(str)) {
-//     res = a.s21_smart_calc(str, 0.0);
-//   }
-//   std::cout << res;
-//   // 305045.5
-//   return 0;
-// }

@@ -188,7 +188,7 @@ TEST(SmartCalculator, TestFunc14) {
 }
 TEST(SmartCalculator, TestFunc15) {
   s21::Model a;
-  std::string str = "4mod8";
+  std::string str = "4%8";
   double res;
   if (a.Validator(str)) {
     res = a.Calculator(str, 0.0);
@@ -267,6 +267,22 @@ TEST(SmartCalculator, TestFunc22) {
 TEST(SmartCalculator, TestFunc23) {
   s21::Model a;
   std::string str = "2+7.55.5";
+  double res;
+  res = (a.Validator(str));
+  EXPECT_FLOAT_EQ(res, 0);
+}
+TEST(SmartCalculator, TestFunc24) {
+  s21::Model a;
+  std::string str = "cos(pi)";
+  double res;
+  if (a.Validator(str)) {
+    res = a.Calculator(str, 0.0);
+  }
+  EXPECT_FLOAT_EQ(res, cos(acos(-1)));
+}
+TEST(SmartCalculator, TestFunc25) {
+  s21::Model a;
+  std::string str = ".5";
   double res;
   res = (a.Validator(str));
   EXPECT_FLOAT_EQ(res, 0);

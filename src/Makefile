@@ -33,6 +33,7 @@ install: clean uninstall
 
 uninstall:
 	rm -rf build*
+	rm -rf ./view/build*
 
 dvi:
 	$(OPEN_CMD) readme.html

@@ -41,7 +41,8 @@ void MainWindow::setupButtons() {
   connect(ui->pushButton_draw_graph, SIGNAL(clicked()), this,
           SLOT(drawGraph()));
   ui->pushButton_graph->setCheckable(true);
-  connect(ui->pushButton_clear_graph, SIGNAL(clicked()), this, SLOT(clearGraph()));
+  connect(ui->pushButton_clear_graph, SIGNAL(clicked()), this,
+          SLOT(clearGraph()));
 }
 
 void MainWindow::setupDigitButtons() {
@@ -160,7 +161,7 @@ void MainWindow::functionInput() {
   } else if (button == ui->pushButton_sqrt) {
     ui->result_show->setText(result_label + "sqrt(");
   } else if (button == ui->pushButton_mod) {
-    ui->result_show->setText(result_label + "mod");
+    ui->result_show->setText(result_label + "%");
   } else if (button == ui->pushButton_ln) {
     ui->result_show->setText(result_label + "ln(");
   } else if (button == ui->pushButton_log) {
@@ -211,7 +212,7 @@ void MainWindow::on_pushButton_dot_clicked() {
 void MainWindow::on_pushButton_equal_clicked() {
   double x = 0.0;
   QString str = ui->result_show->text();
-  QString numberResult = "";
+
   QString pi = QString::fromStdString("π");
   QString div = QString::fromStdString("÷");
 
@@ -230,7 +231,7 @@ void MainWindow::on_pushButton_equal_clicked() {
   std::string stdString = str.toStdString();
   if (controller.Validate(stdString)) {
     double result = controller.Calculate(stdString, x);
-    numberResult = QString::number(result);
+    QString numberResult = QString::number(result);
     ui->result_show->setText(numberResult);
   } else {
     ui->result_show->setText("Format Error");
