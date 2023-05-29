@@ -9,7 +9,7 @@ GCOV_FLAGS?=--coverage#-fprofile-arcs -ftest-coverage
 LIBS=-lgtest
 VALGRIND_FLAGS=--trace-children=yes --track-fds=yes --track-origins=yes --leak-check=full --show-leak-kinds=all --verbose
 #For Linux support
-CMAKE_FLAGS=-DCMAKE_PREFIX_PATH="/home/user/Qt/6.5.1/gcc_64"
+CMAKE_FLAGS=#-DCMAKE_PREFIX_PATH="/home/user/Qt/6.5.1/gcc_64"
 
 SRC=./model/model.cc
 
