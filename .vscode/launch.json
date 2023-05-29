@@ -27,7 +27,7 @@
           "ignoreFailures": true
         }
       ],
-      "visualizerFile": "/Users/stonehom/Library/Application Support/Code/User/workspaceStorage/87ff9469616538b3ba0d13e48dae84d9/tonka3000.qtvsctools/qt.natvis.xml"
+      "visualizerFile": "/Users/stonehom/Library/Application Support/Code/User/workspaceStorage/9cf59ac19a6111ab34ac51b4449062e1/tonka3000.qtvsctools/qt.natvis.xml"
     },
     {
       "name": "(lldb) Launch unit_test",
@@ -40,7 +40,7 @@
       "environment": [],
       "externalConsole": false,
       "MIMode": "lldb",
-      "visualizerFile": "/Users/stonehom/Library/Application Support/Code/User/workspaceStorage/87ff9469616538b3ba0d13e48dae84d9/tonka3000.qtvsctools/qt.natvis.xml"
+      "visualizerFile": "/Users/stonehom/Library/Application Support/Code/User/workspaceStorage/9cf59ac19a6111ab34ac51b4449062e1/tonka3000.qtvsctools/qt.natvis.xml"
     },
     {
       "name": "(lldb) Launch model",
@@ -53,7 +53,7 @@
       "environment": [],
       "externalConsole": false,
       "MIMode": "lldb",
-      "visualizerFile": "/Users/stonehom/Library/Application Support/Code/User/workspaceStorage/87ff9469616538b3ba0d13e48dae84d9/tonka3000.qtvsctools/qt.natvis.xml"
+      "visualizerFile": "/Users/stonehom/Library/Application Support/Code/User/workspaceStorage/9cf59ac19a6111ab34ac51b4449062e1/tonka3000.qtvsctools/qt.natvis.xml"
     }
   ]
 }
