@@ -80,10 +80,8 @@ void MainWindow::setupFunctionButtons() {
 void MainWindow::xInput() {
   QPushButton *button = (QPushButton *)sender();
   clearOutput();
-  if (ui->result_show->hasFocus()) {
-    QString result_label2 = (ui->result_show->text() + button->text());
-    ui->result_show->setText(result_label2);
-  }
+  QString result_label2 = (ui->result_show->text() + button->text());
+  ui->result_show->setText(result_label2);
 }
 
 void MainWindow::digitInput() {
@@ -182,7 +180,7 @@ void MainWindow::clearInput() {
 
 void MainWindow::clearOutput() {
   QString result = ui->result_show->text();
-  if (result == "Format Error") {
+  if (result == "Format Error" || result == "Enter an expression") {
     ui->result_show->setText("");
   }
 }
@@ -211,30 +209,34 @@ void MainWindow::on_pushButton_dot_clicked() {
 
 void MainWindow::on_pushButton_equal_clicked() {
   double x = 0.0;
+  double result = 0.0;
   QString str = ui->result_show->text();
 
   QString pi = QString::fromStdString("π");
   QString div = QString::fromStdString("÷");
 
-  if (str.contains(pi)) {
-    str.replace(pi, QString::fromStdString("pi"));
-  }
-  if (str.contains(div)) {
-    str.replace(div, QString::fromStdString("/"));
-  }
-  if (str.contains('x')) {
-    if (ui->x_value->text() != "") {
-      str.replace("x", ui->x_value->text());
-      x = ui->x_value->text().toDouble();
-    }
-  }
-  std::string stdString = str.toStdString();
-  if (controller.Validate(stdString)) {
-    double result = controller.Calculate(stdString, x);
-    QString numberResult = QString::number(result);
-    ui->result_show->setText(numberResult);
+  if (str == "") {
+    ui->result_show->setText("Enter an expression");
   } else {
-    ui->result_show->setText("Format Error");
+    if (str.contains(pi)) {
+      str.replace(pi, QString::fromStdString("pi"));
+    }
+    if (str.contains(div)) {
+      str.replace(div, QString::fromStdString("/"));
+    }
+    if (str.contains('x')) {
+      if (ui->x_value->text() != "") {
+        str.replace("x", ui->x_value->text());
+        x = ui->x_value->text().toDouble();
+      }
+    }
+    std::string stdString = str.toStdString();
+    if (controller.Validate(stdString)) {
+      result = controller.Calculate(stdString, x);
+      ui->result_show->setText(QString::number(result));
+    } else {
+      ui->result_show->setText("Format Error");
+    }
   }
 }
 
