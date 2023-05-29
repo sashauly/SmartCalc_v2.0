@@ -54,6 +54,7 @@ background-color: rgb(253, 251, 254);
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	border: none;
+	color: black;
 }
 QPushButton:pressed {
 	border-style: outset;
@@ -84,6 +85,7 @@ QPushButton:pressed {
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	border: none;
+	color: black;
 }
 QPushButton:pressed {
 	border-style: outset;
@@ -114,6 +116,7 @@ QPushButton:pressed {
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	border: none;
+	color: black;
 }
 QPushButton:pressed {
 	border-style: outset;
@@ -144,6 +147,7 @@ QPushButton:pressed {
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	border: none;
+	color: black;
 }
 QPushButton:pressed {
 	border-style: outset;
@@ -174,6 +178,7 @@ QPushButton:pressed {
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	border: none;
+	color: black;
 }
 QPushButton:pressed {
 	border-style: outset;
@@ -204,6 +209,7 @@ QPushButton:pressed {
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	border: none;
+	color: black;
 }
 QPushButton:pressed {
 	border-style: outset;
@@ -234,6 +240,7 @@ QPushButton:pressed {
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	border: none;
+	color: black;
 }
 QPushButton:pressed {
 	border-style: outset;
@@ -264,6 +271,7 @@ QPushButton:pressed {
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	border: none;
+	color: black;
 }
 QPushButton:pressed {
 	border-style: outset;
@@ -294,6 +302,7 @@ QPushButton:pressed {
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	border: none;
+	color: black;
 }
 QPushButton:pressed {
 	border-style: outset;
@@ -324,6 +333,7 @@ QPushButton:pressed {
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	border: none;
+	color: black;
 }
 QPushButton:pressed {
 	border-style: outset;
@@ -354,6 +364,7 @@ QPushButton:pressed {
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	border: none;
+	color: black;
 }
 QPushButton:pressed {
 	border-style: outset;
@@ -384,6 +395,7 @@ QPushButton:pressed {
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	border: none;
+	color: black;
 }
 QPushButton:pressed {
 	border-style: outset;
@@ -416,6 +428,7 @@ QPushButton:pressed {
 	border-style: outset;
 	border-width: 2px;
 	border-radius: 25px;
+	color: black;
 	background-color: rgb(223, 225, 248);
 	border: none;
 }
@@ -451,6 +464,7 @@ QPushButton:pressed {
 	border-style: outset;
 	border-width: 2px;
 	border-radius: 25px;
+	color: black;
 	background-color: rgb(251, 212, 243);
 	border: none;
 }
@@ -485,6 +499,7 @@ QPushButton:pressed {
 	border-style: outset;
 	border-width: 2px;
 	border-radius: 25px;
+	color: black;
 	background-color: rgb(223, 225, 248);
 	border: none;
 }
@@ -520,6 +535,7 @@ QPushButton:pressed {
 	border-style: outset;
 	border-width: 2px;
 	border-radius: 25px;
+	color: black;
 	background-color: rgb(223, 225, 248);
 	border: none;
 }
@@ -555,6 +571,7 @@ QPushButton:pressed {
 	border-style: outset;
 	border-width: 2px;
 	border-radius: 25px;
+	color: black;
 	background-color: rgb(223, 225, 248);
 	border: none;
 }
@@ -590,6 +607,7 @@ QPushButton:pressed {
 	border-style: outset;
     border-width: 2px;
     border-radius: 25px;
+	color: black;
 	background-color: rgb(245, 242, 249);
 	border: none;
 }
@@ -624,6 +642,7 @@ QPushButton:pressed {
 	border-style: outset;
     border-width: 2px;
     border-radius: 25px;
+	color: black;
 	background-color: rgb(245, 242, 249);
 	border: none;
 }
@@ -658,6 +677,7 @@ QPushButton:pressed {
 	border-style: outset;
     border-width: 2px;
     border-radius: 25px;
+	color: black;
 	background-color: rgb(245, 242, 249);
 	border: none;
 }
@@ -692,6 +712,7 @@ QPushButton:pressed {
 	border-style: outset;
 	border-width: 2px;
 	border-radius: 25px;
+	color: black;
 	background-color: rgb(223, 225, 248);
 	border: none;
 }
@@ -727,6 +748,7 @@ QPushButton:pressed {
 	border-style: outset;
     border-width: 2px;
     border-radius: 25px;
+	color: black;
 	background-color: rgb(245, 242, 249);
 	border: none;
 }
@@ -761,6 +783,7 @@ QPushButton:pressed {
 	border-style: outset;
     border-width: 2px;
     border-radius: 25px;
+	color: black;
 	background-color: rgb(245, 242, 249);
 	border: none;
 }
@@ -795,6 +818,7 @@ QPushButton:pressed {
 	border-style: outset;
     border-width: 2px;
     border-radius: 25px;
+	color: black;
 	background-color: rgb(245, 242, 249);
 	border: none;
 }
@@ -829,6 +853,7 @@ QPushButton:pressed {
 	border-style: outset;
 	border-width: 2px;
 	border-radius: 25px;
+	color: black;
 	background-color: rgb(223, 225, 248);
 	border: none;
 }
@@ -864,6 +889,7 @@ QPushButton:pressed {
 	border-style: outset;
     border-width: 2px;
     border-radius: 25px;
+	color: black;
 	background-color: rgb(245, 242, 249);
 	border: none;
 }
@@ -898,6 +924,7 @@ QPushButton:pressed {
 	border-style: outset;
     border-width: 2px;
     border-radius: 25px;
+	color: black;
 	background-color: rgb(245, 242, 249);
 	border: none;
 }
@@ -932,6 +959,7 @@ QPushButton:pressed {
 	border-style: outset;
     border-width: 2px;
     border-radius: 25px;
+	color: black;
 	background-color: rgb(245, 242, 249);
 	border: none;
 }
@@ -966,6 +994,7 @@ QPushButton:pressed {
 	border-style: outset;
 	border-width: 2px;
 	border-radius: 25px;
+	color: black;
 	background-color: rgb(223, 225, 248);
 	border: none;
 }
@@ -1001,6 +1030,7 @@ QPushButton:pressed {
 	border-style: outset;
     border-width: 2px;
     border-radius: 25px;
+	color: black;
 	background-color: rgb(245, 242, 249);
 	border: none;
 }
@@ -1035,6 +1065,7 @@ QPushButton:pressed {
 	border-style: outset;
     border-width: 2px;
     border-radius: 25px;
+	color: black;
 	background-color: rgb(245, 242, 249);
 	border: none;
 }
@@ -1069,6 +1100,7 @@ QPushButton:pressed {
 	border-style: outset;
     border-width: 2px;
     border-radius: 25px;
+	color: black;
 	background-color: rgb(245, 242, 249);
 	border: none;
 }
@@ -1104,6 +1136,7 @@ QPushButton:pressed {
 	border-width: 2px;
 	border-radius: 15px;
 	border: none;
+	color: black;
 	background-color: rgb(245, 242, 249);
 }
 QPushButton:pressed {
@@ -1214,6 +1247,7 @@ QPushButton:pressed {
 	border-width: 2px;
 	border-radius: 15px;
 	border: none;
+	color: black;
 	background-color: rgb(245, 242, 249);
 }
 QPushButton:pressed {
@@ -1260,6 +1294,7 @@ QPushButton:pressed {
 	border-style: outset;
 	border-width: 2px;
 	border-radius: 25px;
+	color: black;
 	background-color: rgb(223, 225, 248);
 	border: none;
 }
@@ -1301,6 +1336,7 @@ QPushButton:pressed {
 	border-width: 2px;
 	border-radius: 15px;
 	border: none;
+	color: black;
 background-color : rgb(229,229,241);
 }</string>
     </property>
@@ -1348,6 +1384,7 @@ background-color : rgb(229,229,241);
 	border-width: 2px;
 	border-radius: 15px;
 	border: none;
+	color: black;
 background-color : rgb(229,229,241);
 }</string>
     </property>
@@ -1392,6 +1429,7 @@ background-color : rgb(229,229,241);
 	border-width: 2px;
 	border-radius: 15px;
 	border: none;
+	color: black;
 background-color : rgb(229,229,241);
 }</string>
     </property>
@@ -1436,6 +1474,7 @@ background-color : rgb(229,229,241);
 	border-width: 2px;
 	border-radius: 15px;
 	border: none;
+	color: black;
 background-color : rgb(229,229,241);
 }</string>
     </property>
@@ -1469,6 +1508,12 @@ background-color : rgb(229,229,241);
       <pointsize>22</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+	border: none;
+	color: black;
+}</string>
+    </property>
     <property name="text">
      <string>x min = </string>
     </property>
@@ -1486,6 +1531,12 @@ background-color : rgb(229,229,241);
      <font>
       <pointsize>22</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+	border: none;
+	color: black;
+}</string>
     </property>
     <property name="text">
      <string>y min = </string>
@@ -1505,6 +1556,12 @@ background-color : rgb(229,229,241);
       <pointsize>22</pointsize>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+	border: none;
+	color: black;
+}</string>
+    </property>
     <property name="text">
      <string>x max =</string>
     </property>
@@ -1522,6 +1579,12 @@ background-color : rgb(229,229,241);
      <font>
       <pointsize>22</pointsize>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QLabel {
+	border: none;
+	color: black;
+}</string>
     </property>
     <property name="text">
      <string>y max = </string>
@@ -1546,6 +1609,7 @@ background-color : rgb(229,229,241);
 	border-style: outset;
 	border-width: 2px;
 	border-radius: 25px;
+	color: black;
 	background-color: rgb(251, 212, 243);
 	border: none;
 }

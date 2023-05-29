@@ -37,6 +37,9 @@ void MainWindow::setupButtons() {
   connect(ui->pushButton_open, SIGNAL(clicked()), this, SLOT(bracketInput()));
   connect(ui->pushButton_close, SIGNAL(clicked()), this, SLOT(bracketInput()));
 
+  connect(ui->pushButton_dot, SIGNAL(clicked()), this, SLOT(dotInput()));
+  connect(ui->pushButton_equal, SIGNAL(clicked()), this, SLOT(equalInput()));
+
   connect(ui->pushButton_graph, SIGNAL(clicked()), this, SLOT(setupGraph()));
   connect(ui->pushButton_draw_graph, SIGNAL(clicked()), this,
           SLOT(drawGraph()));
@@ -185,7 +188,7 @@ void MainWindow::clearOutput() {
   }
 }
 
-void MainWindow::on_pushButton_dot_clicked() {
+void MainWindow::dotInput() {
   int count = 0;
   QString str = ui->result_show->text();
   int len = str.isNull() ? 0 : str.length();
@@ -207,7 +210,7 @@ void MainWindow::on_pushButton_dot_clicked() {
   }
 }
 
-void MainWindow::on_pushButton_equal_clicked() {
+void MainWindow::equalInput() {
   double x = 0.0;
   double result = 0.0;
   QString str = ui->result_show->text();
@@ -231,8 +234,8 @@ void MainWindow::on_pushButton_equal_clicked() {
       }
     }
     std::string stdString = str.toStdString();
-    if (controller.Validate(stdString)) {
-      result = controller.Calculate(stdString, x);
+    if (controller.validate(stdString)) {
+      result = controller.calculate(stdString, x);
       ui->result_show->setText(QString::number(result));
     } else {
       ui->result_show->setText("Format Error");
@@ -294,7 +297,7 @@ void MainWindow::drawGraph() {
     while (X < (double)x_max_num) {
       x.push_back(X);
       std::string stdString = str.toStdString();
-      Y = controller.Calculate(stdString, X);
+      Y = controller.calculate(stdString, X);
       y.push_back(Y);
       X += step;
     }
@@ -324,4 +327,4 @@ bool MainWindow::isLetter(QChar ch) {
 bool MainWindow::isOperation(QChar ch) {
   return ((ch) == '+' || (ch) == '-' || (ch) == '*' || (ch) == '/' ||
           (ch) == '^');
-}
+};

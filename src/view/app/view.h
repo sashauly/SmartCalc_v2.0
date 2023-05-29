@@ -52,9 +52,8 @@ class MainWindow : public QMainWindow {
   void functionInput();
   void clearInput();
   void clearOutput();
-
-  void on_pushButton_dot_clicked();
-  void on_pushButton_equal_clicked();
+  void dotInput();
+  void equalInput();
 
   void setupGraph();
   void drawGraph();

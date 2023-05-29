@@ -9,7 +9,7 @@ bool Model::isOperation(char ch) {
 }
 
 //  Проверка ошибок во входной строке
-int Model::Validator(std::string& str) {
+int Model::validator(std::string& str) {
   int error = 1;
   int open_brackets = 0;
   int closed_brackets = 0;
@@ -17,6 +17,17 @@ int Model::Validator(std::string& str) {
   int str_size = (int)str.size();
 
   for (int i = 0; i < str_size; i++) {
+    if (isdigit(str[i])) {
+      for (; isdigit(str[i]) || str[i] == '.'; i++) {
+        if (str[i] == ',') str[i] = '.';
+        if (str[i] == '.') count_dot++;
+      }
+      if (count_dot > 1) {
+        error = 0;
+        break;
+      }
+      count_dot = 0;
+    }
     if (isOperation(str[i])) {
       if (isOperation(str[i + 1]) || (str[i + 1] == '.') ||
           (str[i + 1] == ',') || i == str_size - 1 ||
@@ -41,26 +52,7 @@ int Model::Validator(std::string& str) {
     }
   }
   if (open_brackets != closed_brackets) error = 0;
-
-  if (str[0] == '.' || str[0] == ',') {
-    error = 0;
-  }
-  for (int i = 0; i < str_size; i++) {
-    if (isdigit(str[i])) {
-      while (isdigit(str[i]) || str[i] == '.') {
-        if (str[i] == ',') str[i] = '.';
-        if (str[i] == '.') count_dot++;
-        i++;
-      }
-      if (count_dot > 1) {
-        error = 0;
-        break;
-      }
-    } else {
-      count_dot = 0;
-      continue;
-    }
-  }
+  if (str[0] == '.' || str[0] == ',') error = 0;
 
   return error;
 }
@@ -132,10 +124,9 @@ Model::lexeme_enum Model::typeOperation(char ch) {
 }
 
 //  Вычисление бинарных операций
-int Model::binaryOperations(int oper, double* c) {
+void Model::binaryOperations(int oper, double* c) {
   double a = 0, b = 0;
   *c = 0;
-  int error = 0;
   a = numbers_.top().value_;
   numbers_.pop();
   b = numbers_.top().value_;
@@ -151,23 +142,17 @@ int Model::binaryOperations(int oper, double* c) {
       *c = a * b;
       break;
     case DIV:
-      if (a != 0) {
-        *c = b / a;
-      } else {
-        error = 1;
-      }
+      *c = b / a;
       break;
     case MOD:
       *c = fmod(b, a);
       break;
   }
-  return error;
 }
 //  Вычисление функций
-int Model::funcOperations(int oper, double* c) {
+void Model::funcOperations(int oper, double* c) {
   double a = 0, b = 0;
   *c = 0;
-  int error = 0;
   a = numbers_.top().value_;
   numbers_.pop();
   switch (oper) {
@@ -204,23 +189,18 @@ int Model::funcOperations(int oper, double* c) {
       *c = pow(b, a);
       break;
   }
-  return error;
 }
 //  Вычисление в зависимости от оператора в стеке
-int Model::Calculations() {
+void Model::calculations() {
   double c = 0;
-  int error = 0;
   int oper = operations_.top().type_;
   if (oper >= SUM && oper <= MOD) {
-    error = binaryOperations(oper, &c);
+    binaryOperations(oper, &c);
   } else if (oper >= COS && oper <= POW) {
-    error = funcOperations(oper, &c);
+    funcOperations(oper, &c);
   }
   operations_.pop();
-  if (error == 0) {
-    numbers_.push({c, NUM});
-  }
-  return error;
+  numbers_.push({c, NUM});
 }
 
 //  Основной парсер строки
@@ -274,7 +254,7 @@ void Model::Parser(std::string& str, double x) {
           operations_.push({0, type});
           continue;
         }
-        Calculations();
+        calculations();
         i--;
         continue;
       }
@@ -284,7 +264,7 @@ void Model::Parser(std::string& str, double x) {
       // Закрывающая скобка
     } else if (str[i] == ')') {
       while (operations_.top().type_ != OPEN) {
-        Calculations();
+        calculations();
       }
       operations_.pop();
       continue;
@@ -293,12 +273,12 @@ void Model::Parser(std::string& str, double x) {
 }
 
 //  Основная функция SMART_CALC
-double Model::Calculator(std::string& str, double x) {
+double Model::calculator(std::string& str, double x) {
   double result = 0;
 
   Parser(str, x);
   while (!operations_.empty()) {
-    Calculations();
+    calculations();
   }
   result = numbers_.top().value_;
   return result;

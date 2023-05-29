@@ -2,248 +2,258 @@
 
 #include "../model.h"
 
-TEST(SmartCalculator, TestValidator) {
+TEST(Smartcalculator, TestValidator) {
   s21::Model a;
   std::string str = "(2+3)))--";
-  int res = (a.Validator(str));
+  int res = (a.validator(str));
   EXPECT_EQ(res, 0);
 }
 
-TEST(SmartCalculator, TestFuncError) {
+TEST(Smartcalculator, TestFuncError) {
   s21::Model a;
   std::string str = "fgxh";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_EQ(res, 0);
 }
 
-TEST(SmartCalculator, TestBracketsError1) {
+TEST(Smartcalculator, TestFuncError1) {
+  s21::Model a;
+  std::string str = "1/0";
+  double res;
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
+  }
+  EXPECT_EQ(res, INFINITY);
+}
+
+TEST(Smartcalculator, TestBracketsError1) {
   s21::Model a;
   std::string str = "()";
-  int res = (a.Validator(str));
+  int res = (a.validator(str));
   EXPECT_EQ(res, 0);
 }
 
-TEST(SmartCalculator, TestBracketsError2) {
+TEST(Smartcalculator, TestBracketsError2) {
   s21::Model a;
   std::string str = ")(";
-  int res = (a.Validator(str));
+  int res = (a.validator(str));
   EXPECT_EQ(res, 0);
 }
 
-TEST(SmartCalculator, TestOperation) {
+TEST(Smartcalculator, TestOperation) {
   s21::Model a;
   std::string str = "-4 + 9 + 7 - 9";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_EQ(res, 3);
 }
-TEST(SmartCalculator, TestOperation1) {
+TEST(Smartcalculator, TestOperation1) {
   s21::Model a;
   std::string str = "+4 + 9 / 2 * 67787";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_EQ(res, 305045.5);
 }
-TEST(SmartCalculator, TestFunc) {
+TEST(Smartcalculator, TestFunc) {
   s21::Model a;
   std::string str = "(4^acos(2/4))";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 4.27047);
 }
-TEST(SmartCalculator, TestFunc1) {
+TEST(Smartcalculator, TestFunc1) {
   s21::Model a;
   std::string str = "(tan(2*2))";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 1.1578213);
 }
-TEST(SmartCalculator, TestFunc2) {
+TEST(Smartcalculator, TestFunc2) {
   s21::Model a;
   std::string str = "(4^acos(2/4)/tan(2*2))";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 3.6883678);
 }
-TEST(SmartCalculator, TestFunc3) {
+TEST(Smartcalculator, TestFunc3) {
   s21::Model a;
   std::string str = "(4^acos(2/4)/tan(2*2)/5^acos(2/4))";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 0.68371409);
 }
-TEST(SmartCalculator, TestFunc4) {
+TEST(Smartcalculator, TestFunc4) {
   s21::Model a;
   std::string str = "(4^acos(2/4)/tan(2*2)/5^acos(2/4)/tan(tan(tan(2*2))))";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, -0.58934796);
 }
-TEST(SmartCalculator, TestFunc5) {
+TEST(Smartcalculator, TestFunc5) {
   s21::Model a;
   std::string str = "3^cos(0.5)/5";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 0.52449733);
 }
-TEST(SmartCalculator, TestFunc6) {
+TEST(Smartcalculator, TestFunc6) {
   s21::Model a;
   std::string str = "3^cos(0.5)/sqrt(25)";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 0.52449733);
 }
-TEST(SmartCalculator, TestFunc7) {
+TEST(Smartcalculator, TestFunc7) {
   s21::Model a;
   std::string str = "log(10)";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 1);
 }
-TEST(SmartCalculator, TestFunc8) {
+TEST(Smartcalculator, TestFunc8) {
   s21::Model a;
   std::string str = "1+2*(3^sin(0.4))^3*2+1";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 16.436413);
 }
-TEST(SmartCalculator, TestFunc9) {
+TEST(Smartcalculator, TestFunc9) {
   s21::Model a;
   std::string str = "ln(10)";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 2.3025851);
 }
-TEST(SmartCalculator, TestFunc10) {
+TEST(Smartcalculator, TestFunc10) {
   s21::Model a;
   std::string str = "1+2*3^sin(0.4)^3*2+1";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 6.291162);
 }
-TEST(SmartCalculator, TestFunc11) {
+TEST(Smartcalculator, TestFunc11) {
   s21::Model a;
   std::string str = "1+2*3^sin(0.4)^56*2+1";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 6);
 }
-TEST(SmartCalculator, TestFunc12) {
+TEST(Smartcalculator, TestFunc12) {
   s21::Model a;
   std::string str = "acos(-0.5)+asin(-0.5)+atan(0.1)*cos(30)*sin(20)*tan(45)";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 1.5935309);
 }
-TEST(SmartCalculator, TestFunc13) {
+TEST(Smartcalculator, TestFunc13) {
   s21::Model a;
   std::string str = "(-5)^(-4)";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 0.0016);
 }
-TEST(SmartCalculator, TestFunc14) {
+TEST(Smartcalculator, TestFunc14) {
   s21::Model a;
   std::string str = "-4+5";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 1);
 }
-TEST(SmartCalculator, TestFunc15) {
+TEST(Smartcalculator, TestFunc15) {
   s21::Model a;
   std::string str = "4%8";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, 4);
 }
-TEST(SmartCalculator, TestFunc16) {
+TEST(Smartcalculator, TestFunc16) {
   s21::Model a;
   std::string str = "4^acos(x/4)/tan(2*x)";
   double res;
   double x = 2.0;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, x);
+  if (a.validator(str)) {
+    res = a.calculator(str, x);
   }
   EXPECT_FLOAT_EQ(res, pow(4, acos(x / 4)) / tan(2 * x));
 }
-TEST(SmartCalculator, TestFunc17) {
+TEST(Smartcalculator, TestFunc17) {
   s21::Model a;
   std::string str = "(4^acos(x/4))/tan(2*x)";
   double res;
   double x = 2.0;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, x);
+  if (a.validator(str)) {
+    res = a.calculator(str, x);
   }
   EXPECT_FLOAT_EQ(res, (pow(4, acos(x / 4)) / tan(2 * x)));
 }
-TEST(SmartCalculator, TestFunc18) {
+TEST(Smartcalculator, TestFunc18) {
   s21::Model a;
   std::string str =
       "(4 ^acos( 2/4 )/tan( 2*2 )/( 5 ^acos( 2/4 ))/tan(tan(tan( 2*2))))";
   double res;
   double x = 2.0;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, x);
+  if (a.validator(str)) {
+    res = a.calculator(str, x);
   }
   EXPECT_FLOAT_EQ(res, -0.58934793341);
 }
-TEST(SmartCalculator, TestFunc19) {
+TEST(Smartcalculator, TestFunc19) {
   s21::Model a;
   std::string str = "2^sin(0.4)^3";
   double res;
   double x = 0.0;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, x);
+  if (a.validator(str)) {
+    res = a.calculator(str, x);
   }
   EXPECT_TRUE((fabs(1.041782) - fabs(res)) < 10e-7);
 }
-TEST(SmartCalculator, TestFunc20) {
+TEST(Smartcalculator, TestFunc20) {
   s21::Model a;
   std::string str = "sin(-)";
   double res;
-  res = (a.Validator(str));
+  res = (a.validator(str));
   EXPECT_FLOAT_EQ(res, 0);
 }
-TEST(SmartCalculator, TestFunc21) {
+TEST(Smartcalculator, TestFunc21) {
   s21::Model a;
   std::string str =
       "+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+"
@@ -252,39 +262,39 @@ TEST(SmartCalculator, TestFunc21) {
       "1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1+1";
   double res;
   double x = 0.0;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, x);
+  if (a.validator(str)) {
+    res = a.calculator(str, x);
   }
   EXPECT_FLOAT_EQ(res, 130);
 }
-TEST(SmartCalculator, TestFunc22) {
+TEST(Smartcalculator, TestFunc22) {
   s21::Model a;
   std::string str = "sin()";
   double res;
-  res = (a.Validator(str));
+  res = (a.validator(str));
   EXPECT_FLOAT_EQ(res, 0);
 }
-TEST(SmartCalculator, TestFunc23) {
+TEST(Smartcalculator, TestFunc23) {
   s21::Model a;
   std::string str = "2+7.55.5";
   double res;
-  res = (a.Validator(str));
+  res = (a.validator(str));
   EXPECT_FLOAT_EQ(res, 0);
 }
-TEST(SmartCalculator, TestFunc24) {
+TEST(Smartcalculator, TestFunc24) {
   s21::Model a;
   std::string str = "cos(pi)";
   double res;
-  if (a.Validator(str)) {
-    res = a.Calculator(str, 0.0);
+  if (a.validator(str)) {
+    res = a.calculator(str, 0.0);
   }
   EXPECT_FLOAT_EQ(res, cos(acos(-1)));
 }
-TEST(SmartCalculator, TestFunc25) {
+TEST(Smartcalculator, TestFunc25) {
   s21::Model a;
   std::string str = ".5";
   double res;
-  res = (a.Validator(str));
+  res = (a.validator(str));
   EXPECT_FLOAT_EQ(res, 0);
 }
 

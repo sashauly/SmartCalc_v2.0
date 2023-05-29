@@ -15,8 +15,8 @@ class Model {
  public:
   Model() {}
   ~Model() {}
-  double Calculator(std::string& str, double x = 0.0);
-  int Validator(std::string& str);
+  double calculator(std::string& str, double x = 0.0);
+  int validator(std::string& str);
 
  private:
   typedef enum {
@@ -52,9 +52,9 @@ class Model {
   void funcParser(std::string& func, int* i, lexeme_enum* type);
   int getPriority(int type);
   lexeme_enum typeOperation(char ch);
-  int binaryOperations(int oper, double* c);
-  int funcOperations(int oper, double* c);
-  int Calculations();
+  void binaryOperations(int oper, double* c);
+  void funcOperations(int oper, double* c);
+  void calculations();
   void Parser(std::string& str, double x);
   bool isOperation(char ch);
 };
