@@ -11,8 +11,8 @@ class Controller {
  public:
   Controller() {}
   ~Controller() {}
-  double calculate(std::string& str, double x);
-  int validate(std::string& str);
+  double Calculate(std::string& str, double x);
+  int Validate(std::string& str);
 };
 }  // namespace s21
 

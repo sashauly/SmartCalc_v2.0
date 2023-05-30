@@ -10,12 +10,15 @@
 #include <cctype>
 
 #include "../../controller/controller.h"
+#include "qcustomplot.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
 }
 QT_END_NAMESPACE
+
+namespace s21 {
 
 class MainWindow : public QMainWindow {
   Q_OBJECT
@@ -25,9 +28,9 @@ class MainWindow : public QMainWindow {
   ~MainWindow();
 
  private:
-  Ui::MainWindow *ui;
-  QVector<double> x, y;
-  s21::Controller controller;
+  Ui::MainWindow *ui_;
+  QVector<double> x_, y_;
+  Controller controller_;
 
   QList<QPushButton *> buttonsDigits;
   QList<QPushButton *> buttonsOperations;
@@ -59,4 +62,5 @@ class MainWindow : public QMainWindow {
   void drawGraph();
   void clearGraph();
 };
+}  // namespace s21
 #endif  // VIEW_H

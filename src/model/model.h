@@ -15,50 +15,49 @@ class Model {
  public:
   Model() {}
   ~Model() {}
-  double calculator(std::string& str, double x = 0.0);
-  int validator(std::string& str);
+  double Calculator(std::string& str, double x = 0.0);
+  int Validator(std::string& str);
 
  private:
   typedef enum {
-    NONE = 0,
-    NUM,
-    SUM,
-    SUB,
-    MULT,
-    DIV,
-    MOD,
-    COS,
-    SIN,
-    TAN,
-    ACOS,
-    ASIN,
-    ATAN,
-    LN,
-    LOG,
-    SQRT,
-    POW,
-    OPEN,
-    CLOSED
-  } lexeme_enum;
+    kNone = 0,
+    kNum,
+    kSum,
+    kSub,
+    kMult,
+    kDiv,
+    kMod,
+    kCos,
+    kSin,
+    kTan,
+    kAcos,
+    kAsin,
+    kAtan,
+    kLn,
+    kLog,
+    kSqrt,
+    kPow,
+    kOpen,
+    kClosed
+  } LexemeEnum;
 
   typedef struct Lexeme {
     double value_;
-    lexeme_enum type_;
+    LexemeEnum type_;
   } Lexeme;
 
   std::stack<Lexeme> numbers_;
   std::stack<Lexeme> operations_;
 
-  void funcParser(std::string& func, int* i, lexeme_enum* type);
-  int getPriority(int type);
-  lexeme_enum typeOperation(char ch);
-  void binaryOperations(int oper, double* c);
-  void funcOperations(int oper, double* c);
-  void calculations();
+  void FuncParser(std::string& func, int* i, LexemeEnum* type);
+  int GetPriority(int type);
+  LexemeEnum TypeOperation(char ch);
+  void BinaryOperations(int oper, double* c);
+  void FuncOperations(int oper, double* c);
+  void Calculations();
   void Parser(std::string& str, double x);
-  bool isOperation(char ch);
+  bool IsOperation(char ch);
 };
-
 }  // namespace s21
 
 #endif  // SRC_MODEL_MODEL_H_
