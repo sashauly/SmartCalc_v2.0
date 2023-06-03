@@ -51,34 +51,34 @@ void MainWindow::setupButtons() {
 }
 
 void MainWindow::setupDigitButtons() {
-  this->buttonsDigits = {
+  QList<QPushButton *> buttonsDigits = {
       ui_->pushButton_0, ui_->pushButton_1, ui_->pushButton_2,
       ui_->pushButton_3, ui_->pushButton_4, ui_->pushButton_5,
       ui_->pushButton_6, ui_->pushButton_7, ui_->pushButton_8,
       ui_->pushButton_9, ui_->pushButton_pi};
-  for (auto &iterButtons : this->buttonsDigits) {
+  for (auto &iterButtons : buttonsDigits) {
     connect(iterButtons, SIGNAL(clicked()), this, SLOT(digitInput()));
   }
 }
 
 void MainWindow::setupOperationButtons() {
-  this->buttonsOperations = {
+  QList<QPushButton *> buttonsOperations = {
       ui_->pushButton_plus, ui_->pushButton_minus, ui_->pushButton_mult,
       ui_->pushButton_div,  ui_->pushButton_pow,
   };
-  for (auto &iterOperations : this->buttonsOperations) {
+  for (auto &iterOperations : buttonsOperations) {
     connect(iterOperations, SIGNAL(clicked()), this, SLOT(operationInput()));
   }
 }
 
 void MainWindow::setupFunctionButtons() {
-  this->buttonsFunctions = {
+  QList<QPushButton *> buttonsFunctions = {
       ui_->pushButton_sin,  ui_->pushButton_cos,  ui_->pushButton_tan,
       ui_->pushButton_asin, ui_->pushButton_acos, ui_->pushButton_atan,
       ui_->pushButton_sqrt, ui_->pushButton_ln,   ui_->pushButton_mod,
       ui_->pushButton_log,
   };
-  for (auto &iterFunctions : this->buttonsFunctions) {
+  for (auto &iterFunctions : buttonsFunctions) {
     connect(iterFunctions, SIGNAL(clicked()), this, SLOT(functionInput()));
   }
 }

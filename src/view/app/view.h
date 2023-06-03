@@ -32,10 +32,6 @@ class MainWindow : public QMainWindow {
   QVector<double> x_, y_;
   Controller controller_;
 
-  QList<QPushButton *> buttonsDigits;
-  QList<QPushButton *> buttonsOperations;
-  QList<QPushButton *> buttonsFunctions;
-
   void eventLoop();
 
   bool isNumber(QChar ch);
