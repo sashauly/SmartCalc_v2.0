@@ -6,7 +6,7 @@
 namespace s21 {
 class Controller {
  private:
-  s21::Model model_;
+  Model model_;
 
  public:
   Controller() {}
